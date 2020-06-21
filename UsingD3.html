@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <title>Title</title>
+        <!-- Required meta tags -->
+        <meta charset="ISO-8859-1">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    </head>
+    <body>
+        <svg></svg>
+        <button id="bubbleSort" class="btn btn-primary">Bubble Sort</button>
+        <button id="insertionSort" class="btn btn-primary">Insertion Sort</button>
+        <button id="reset" class="btn btn-secondary">Reset</button>
+        <!-- Optional JavaScript -->
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    	<script src="https://d3js.org/d3.v5.min.js"></script>
+        <script>
+            //Define the main container size
+            var svgWidth = 500;
+            var svgHeight = 300;
+            //Define initial data
+            var originalData = [33, 62, 44, 14, 80, 100, 56, 120, 180, 30, 40, 120, 10, 10, 10];
+            //Define display padding and width of bars
+            var barPadding = 5;  
+            var barWidth = (svgWidth / originalData.length);
+            //Define time to wait between animations in ms
+            var sleepTime= 500;
+            //Set the default container's size
+            var svg = d3.select('svg')
+            .attr("width", svgWidth)
+            .attr("height", svgHeight)
+            .attr("class", "bar-chart");
+            //Show initial data shuffled
+            initialBars(shuffle(originalData));
+
+            //Set initial container size
+            var svg = d3.select('svg')
+            .attr("width", svgWidth)
+            .attr("height", svgHeight)
+            .attr("class", "bar-chart");
+
+            //Set on click listeners
+            $("#bubbleSort").click(function(){
+                bubbleSort(originalData);
+            });
+            $("#reset").click(function(){
+                resetBars(originalData);
+            });
+            $("#insertionSort").click(function(){
+                insertionSort(originalData);
+            });
+
+
+            //Bubble sort function
+            async function bubbleSort(dataset){
+                for(var i = 0; i < dataset.length-1; i++){
+                    for(var j = 0; j < dataset.length-i-1; j++){
+                        //Show the bar in red that we are comparing
+                        generateBars(dataset, j, null);
+                        await sleep(sleepTime);
+                        if(dataset[j] > dataset[j+1]){
+                            var temp = dataset[j+1];
+                            dataset[j+1] = dataset[j];
+                            dataset[j] = temp;
+                            generateBars(dataset,j+1, null);
+                            await sleep(sleepTime);
+                        }
+                    } 
+                }
+                console.log(dataset);
+            }
+
+            //Insertion Sort function
+            async function insertionSort(data){
+                for(var i = 1; i < data.length; i++){
+                    var current = data[i];
+                    var j = i-1;
+                    while((j >= 0) && (current < data[j])){
+                        data[j+1] = data[j];
+                        generateBars(data, j+1, i);
+                        await sleep(sleepTime);
+                        j--;
+                    }
+                    data[j+1] = current;
+                    generateBars(data, i, j+1);
+                    await sleep(sleepTime);
+                }
+            }
+
+            //Sleep function so that you can see transitions
+            function sleep(ms) {
+                return new Promise(resolve => setTimeout(resolve, ms));
+            }
+
+            //Function to show initial data in graph and generate initial elements
+            function initialBars(data){
+                var barChart = svg.selectAll("rect")  
+                .data(data)  
+                //Next two lines key difference between this block and the generateBars function
+                //Enter and append will generate new html elements
+                .enter()  
+                .append("rect")
+                .style('fill', '#3c763d')
+                .attr("y", function(d) {  
+                    return svgHeight - d  
+                })  
+                .attr("height", function(d) {  
+                    return d;  
+                })  
+                .attr("width", barWidth - barPadding)  
+                .attr("transform", function (d, i) {  
+                    var translate = [barWidth * i, 0];  
+                    return "translate("+ translate +")";  
+                });
+            }
+
+            function resetBars(data){
+                var barChart = svg.selectAll("rect")  
+                .data(shuffle(data))  
+                .style('fill', '#3c763d')
+                .attr("y", function(d) {  
+                    return svgHeight - d  
+                })  
+                .attr("height", function(d) {  
+                    return d;  
+                })  
+                .attr("width", barWidth - barPadding)  
+                .attr("transform", function (d, i) {  
+                    var translate = [barWidth * i, 0];  
+                    return "translate("+ translate +")";  
+                });
+            }
+
+            //Function to show all the bars
+            function generateBars(data, current, compare){
+                //Generate all the bars
+                var barChart = svg.selectAll("rect")
+                .data(data) 
+                .style('fill', '#3c763d')
+                .attr("y", function(d) {  
+                    return svgHeight - d  
+                })  
+                .attr("height", function(d) {  
+                    return d;  
+                })  
+                .attr("width", barWidth - barPadding)  
+                .attr("transform", function (d, i) {  
+                    var translate = [barWidth * i, 0];  
+                    return "translate("+ translate +")";  
+                });
+                //Set the current bar one we are comparing to a different color
+                //If current is negative then don't change color of any
+                if(current >= 0){
+                    //Need to add one to the current array since the nth-child is indexed at 1 instead of 0 like the array location passed to it
+                    var value = current + 1;
+                    d3.select("rect:nth-child("+value+")").style('fill','red');
+                }
+                if(compare != null){
+                    var compareValue = compare + 1;
+                    d3.select("rect:nth-child("+compareValue+")").style('fill','blue');
+                }
+            }
+
+            //Randomizes input data set
+            function shuffle(dataset){
+                for(var i = 0; i < dataset.length; i++){
+                    var j = Math.floor(Math.random()*dataset.length)
+                    var temp = dataset[i];
+                    dataset[i] = dataset[j];
+                    dataset[j] = temp;
+                }
+                return dataset;
+            }
+        </script>
+    </body>
+</html>
