@@ -250,7 +250,8 @@ while (switched)
                     bars.select("rect").transition().attr("fill","blue");
                     return;
                 }
-                let bar = svg.select("g:nth-child(" + num + ")");
+                var value = num +1;
+                let bar = svg.select("g:nth-child(" + value + ")");
                 bar.select("rect").transition().attr("fill",color);
             }
 

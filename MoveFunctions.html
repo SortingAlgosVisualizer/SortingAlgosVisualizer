@@ -253,7 +253,8 @@ while (switched)
             function moveDown(index){
                 //Set how far we move the item down
                 var downDistance = 100;
-                var item = d3.select("g:nth-child("+index+")")
+                var value = index +1;
+                var item = d3.select("g:nth-child("+value+")")
                 var coord = parseTransform(item);
                 coord[1] = coord[1] + downDistance;
                 item.transition().duration(1000).attr("transform", "translate(" + coord[0] + "," + coord[1] + ")");
@@ -263,7 +264,8 @@ while (switched)
             function moveUp(index){
                 //Set how far we move the item down
                 var upDistance = 100;
-                var item = d3.select("g:nth-child("+index+")")
+                var value = index +1;
+                var item = d3.select("g:nth-child("+value+")")
                 var coord = parseTransform(item);
                 coord[1] = coord[1] - upDistance;
                 item.transition().duration(1000).attr("transform", "translate(" + coord[0] + "," + coord[1] + ")");
@@ -273,7 +275,8 @@ while (switched)
             function moveLeft(index){
                 //Set how far we move the item down
                 var leftDistance = barWidth;
-                var item = d3.select("g:nth-child("+index+")")
+                var value = index +1;
+                var item = d3.select("g:nth-child("+value+")")
                 var coord = parseTransform(item);
                 coord[0] = coord[0] - leftDistance;
                 item.transition().duration(1000).attr("transform", "translate(" + coord[0] + "," + coord[1] + ")");
@@ -283,7 +286,8 @@ while (switched)
             function moveRight(index){
                 //Set how far we move the item down
                 var rightDistance = barWidth;
-                var item = d3.select("g:nth-child("+index+")")
+                var value = index +1;
+                var item = d3.select("g:nth-child("+value+")")
                 var coord = parseTransform(item);
                 coord[0] = coord[0] + rightDistance;
                 item.transition().duration(1000).attr("transform", "translate(" + coord[0] + "," + coord[1] + ")");
