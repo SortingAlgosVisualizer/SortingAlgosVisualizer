@@ -124,3 +124,12 @@ function shuffle(dataset){
     }
     return dataset;
 }
+
+//Create new array
+function randomArray(length, upperLimit) {
+    var newArray = [];
+    for (var x = 0; x < length; x++) {
+        newArray.push(Math.floor(Math.random()*(upperLimit+1)));
+    }
+    return newArray;
+}
