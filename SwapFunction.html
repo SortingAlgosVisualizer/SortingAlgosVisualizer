@@ -21,6 +21,7 @@
                     <button id="bubbleSort" class="btn btn-primary">Bubble Sort</button>
                     <button id="insertionSort" class="btn btn-primary">Insertion Sort</button>
                     <button id="reset" class="btn btn-secondary">Reset</button>
+                    <button id="moveUp" class="btn btn-secondary">Move Up</button>
                 </div>
             </div>
             <div class="row pseudocode">
@@ -28,21 +29,21 @@
                     <div class="row">
                         <div class="col-4"></div>
                         <div class="col-4 text-left code2">
-<p><pre class="line1">
-while (switched)
-</pre></p>
-<p><pre class="line2">
-    switched = false
-    for i = 1 to lastsort-1
-</pre></p>
-<p><pre class="line3">
-        if left value > right value
-            swap(left value, right value)
-            switched = true
-</pre></p>
-<p><pre class="line4">
-    lastsort--
-</pre></p>
+                            <p><pre class="line1">
+                            while (switched)
+                            </pre></p>
+                            <p><pre class="line2">
+                                switched = false
+                                for i = 1 to lastsort-1
+                            </pre></p>
+                            <p><pre class="line3">
+                                    if left value > right value
+                                        swap(left value, right value)
+                                        switched = true
+                            </pre></p>
+                            <p><pre class="line4">
+                                lastsort--
+                            </pre></p>
                         </div>
                     </div>
                     <div class="row">
@@ -59,7 +60,7 @@ while (switched)
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-    	<script src="https://d3js.org/d3.v5.min.js"></script>
+        <script src="https://d3js.org/d3.v5.min.js"></script>
         <script>
             //Define the main container size
             var svgWidth = 500;

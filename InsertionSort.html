@@ -154,8 +154,8 @@ while (switched)
 
             //Insertion Sort function
             async function insertionSort(data){
+                var tempData = data;
                 var time = 1500;
-                stopSort = false;
                 for(var i = 1; i < data.length; i++){
                     var current = data[i];
                     moveDown(i);
@@ -163,18 +163,25 @@ while (switched)
                     await sleep(time);
                     var j = i-1;
                     while((j >= 0) && (current < data[j])){
-                        changeColor(j+1, "blue");
+                        changeColor(j, "blue");
                         await sleep(time);
-                        moveLeft(j+1+1);
-                        moveRight(j+1);
+                        moveLeft(i);
+                        moveRight(j);
                         await sleep(time);
                         data[j+1] = data[j];
                         j--;
                     }
-                    moveUp(i+1);
-                    changeColor(i+1, "orange");
+                    moveUp(i);
+                    changeColor(i, "orange");
                     await sleep(time);
                     data[j+1] = current;
+                }
+            }
+
+            function createLocationArray(data){
+                var arr = [];
+                for(var i = 0; i < data.length; i++){
+                    
                 }
             }
 
@@ -239,6 +246,11 @@ while (switched)
                 barChart.select("text")
                 .attr("x",(barWidth-barPadding)/2)
                 .text(function(d) {return d;});
+            }
+
+            //Function to remove all bars
+            function removeAll(){
+                var barChart = svg.selectAll("g").remove();
             }
 
             function changeBarColor(num) {
