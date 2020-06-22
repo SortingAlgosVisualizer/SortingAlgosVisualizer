@@ -74,6 +74,8 @@ function swapPositionID(item1, item2){
 
 //Function to show initial data in graph and generate initial elements
 function initialBars(data){
+    //Define initial height of bars above bottom of svg container
+    var yAdjust = 300;
     loadPseudocode(-1);
     ////// create a g tag first to group rect and text
     var barChart = svg.selectAll("g")  
@@ -81,7 +83,7 @@ function initialBars(data){
     .enter()
     .append("g")
     // .attr("id", function(d,i){return 'item'+i;})
-    .attr("transform", function(d, i){return "translate(" + (barWidth * i) + "," + (svgHeight-d) + ")";})               
+    .attr("transform", function(d, i){return "translate(" + (barWidth * i) + "," + (svgHeight-d-yAdjust) + ")";})               
     .attr("positionID", function(d,i){return "p"+(i+1);});
     
     barChart.append("rect")
@@ -105,4 +107,20 @@ function swapPosition(num1, num2) {
     gRight.transition().attr("transform", "translate(" + (barWidth * (num2-1)) + "," + (svgHeight-hRight) + ")");
     gLeft.transition().attr("transform", "translate(" + (barWidth * (num1-1)) + "," + (svgHeight-hLeft) + ")");
     swapPositionID(num1, num2);
+}
+
+//Sleep function so that you can see transitions
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+//Randomizes input data set
+function shuffle(dataset){
+    for(var i = 0; i < dataset.length; i++){
+        var j = Math.floor(Math.random()*dataset.length)
+        var temp = dataset[i];
+        dataset[i] = dataset[j];
+        dataset[j] = temp;
+    }
+    return dataset;
 }
