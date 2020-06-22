@@ -1,8 +1,9 @@
 function randomArray(length, upperLimit) {
-    originalData.length = 0;
+    var newArray = [];
     for (var x = 0; x < length; x++) {
-        originalData.push(Math.floor(Math.random()*upperLimit));
+        newArray.push(Math.floor(Math.random()*(upperLimit+1)));
     }
+    return newArray;
 }
 
 // *******************************************************************************************
