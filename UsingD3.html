@@ -28,7 +28,7 @@
             var originalData = [33, 62, 44, 14, 80, 100, 56, 120, 180, 30, 40, 120, 10, 10, 10];
             //Define display padding and width of bars
             var barPadding = 5;  
-            var barWidth = (svgWidth / originalData.length);
+            var barWidth = Math.floor(svgWidth / originalData.length);
             //Define time to wait between animations in ms
             var sleepTime= 200;
             //Define the default y position of the bars above the bottom of the container 
