@@ -71,7 +71,7 @@ while (switched)
             var barPadding = 5;  
             var barWidth = (svgWidth / originalData.length);
             //Define time to wait between animations in ms
-            var sleepTime= 500;
+            var sleepTime= 200;
             ////// set a flag to stop async function call when reset is triggered
             var stopSort = false;
             //Set the default container's size
@@ -104,6 +104,15 @@ while (switched)
             });
 
             
+            //Swaps the position of two values in the dataset array
+            function swapVals(dataset, i, j){
+                let tempval = dataset[i];
+                dataset[i] = dataset[j];
+                dataset[j] = tempval;
+                return dataset; 
+            }
+
+
             //Bubble sort function
             async function bubbleSort(dataset){
                 ////// stopSort is set to false once a function starts, but there are several checks within async function to check for changes to this flag
@@ -117,7 +126,7 @@ while (switched)
                     if (stopSort) return;
                     loadPseudocode(2)
                     switched=false;
-                    await sleep(sleepTime+1500);
+                    await sleep(sleepTime*4);
                     for (var i = 1; i < endsort; i++) {
                         loadPseudocode(3)
                         if (stopSort) return;
@@ -129,27 +138,24 @@ while (switched)
                         if (stopSort) return;
                         if (dataset[i-1] > dataset[i]) {
                             switched = true;
-                            let tempval = dataset[i-1];
-                            dataset[i-1] = dataset[i];
-                            dataset[i] = tempval;
+                            dataset = swapVals(dataset, i, i-1);
                             generateBars(dataset);
-                            await sleep(sleepTime-100);
+                            await sleep(sleepTime*0.8);
                         }
                         ////// when comparison is over, change color back to green
                         changeColor(i, "#3c763d");
                         changeColor(i+1, "#3c763d");
-                        // returnBarColor(i+1);
                     }
                     ////// mark last bar in this loop 'sorted' by changing the color to blue
                     changeColor(endsort, "blue")
 
                     loadPseudocode(4);
-                    await sleep(sleepTime+1000);
+                    await sleep(sleepTime*3);
                     ////// decrement upper limit for 'for' loop (since last position is sorted)
                     endsort--;
                 }
                 loadPseudocode(1);
-                await sleep(sleepTime+2000);
+                await sleep(sleepTime*5);
                 ////// remove pseudocode and change all bars to blue to indicate sorted list
                 loadPseudocode(-1);
                 changeColor(-1, "blue");
