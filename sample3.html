@@ -127,7 +127,7 @@ while (switched)
                             // dataset[i-1] = dataset[i];
                             // dataset[i] = tempval;
                             // generateBars(dataset);
-                            slideBar(i+1);
+                            swap(i+1, i);
                             await sleep(sleepTime-100);
                         }
                         returnBarColor(i+1);
@@ -269,15 +269,15 @@ while (switched)
                 d3.select(".lineval").text(codeDict["line" + num]);
             }
 
-            function slideBar(num) { 
-                let gRight = svg.selectAll("g").filter(function() {return d3.select(this).attr("positionID") == "p" + num;})
-                let gLeft = svg.selectAll("g").filter(function() {return d3.select(this).attr("positionID") == "p" + (num-1);})
+            function swap(num1, num2) { 
+                let gRight = svg.selectAll("g").filter(function() {return d3.select(this).attr("positionID") == "p" + num1;})
+                let gLeft = svg.selectAll("g").filter(function() {return d3.select(this).attr("positionID") == "p" + num2;})
                 let hRight = parseInt(gRight.select("rect").attr("height"));
                 let hLeft = parseInt(gLeft.select("rect").attr("height"));
-                gRight.transition().attr("transform", "translate(" + (barWidth * (num-2)) + "," + (svgHeight-hRight) + ")");
-                gLeft.transition().attr("transform", "translate(" + (barWidth * (num-1)) + "," + (svgHeight-hLeft) + ")");
-                gRight.attr("positionID","p" + (num-1));
-                gLeft.attr("positionID","p" + num);
+                gRight.transition().attr("transform", "translate(" + (barWidth * (num2-1)) + "," + (svgHeight-hRight) + ")");
+                gLeft.transition().attr("transform", "translate(" + (barWidth * (num1-1)) + "," + (svgHeight-hLeft) + ")");
+                gRight.attr("positionID","p" + num2);
+                gLeft.attr("positionID","p" + num1);
             }
 
         </script>
