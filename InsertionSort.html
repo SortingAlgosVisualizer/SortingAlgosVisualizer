@@ -149,8 +149,8 @@
                 var downDistance = 100;
                 var item = d3.select("rect:nth-child("+index+")")
                 var y = parseInt(item.attr("y"));
-                y += 100;
-                item.attr("y", y).transition().duration(1000);
+                y += 50000;
+                item.transition().duration(2000).attr("y", y);
             }
 
             //Function to show all the bars
