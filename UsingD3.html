@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
     <head>
-        <title>Title</title>
+        <title>Sorting Algos</title>
         <!-- Required meta tags -->
         <meta charset="ISO-8859-1">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -9,10 +9,18 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     </head>
     <body>
-        <svg></svg>
-        <button id="bubbleSort" class="btn btn-primary">Bubble Sort</button>
-        <button id="insertionSort" class="btn btn-primary">Insertion Sort</button>
-        <button id="reset" class="btn btn-secondary">Reset</button>
+        <div class="container">
+            <div class="row"><p></p></div>
+            <div class="col"><h1 class="title">Bubble Sort</h1></div>            
+            <div class="row">
+                <svg></svg>
+            </div>
+            <div class="row"><p></p></div>
+            <button id="bubbleSort" class="btn btn-primary">Bubble Sort</button>
+            <button id="insertionSort" class="btn btn-primary">Insertion Sort</button>
+            <button id="reset" class="btn btn-secondary">Reset</button>
+            <button id="sort" class="btn btn-primary">Sort</button>
+        </div>
         <!-- Optional JavaScript -->
         <!-- jQuery first, then Popper.js, then Bootstrap JS -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -21,6 +29,8 @@
     	<script src="https://d3js.org/d3.v5.min.js"></script>
         <script>
             //Define the main container size
+            var done = false;
+            var sortMethod = 1;
             var svgWidth = 500;
             var svgHeight = 300;
             //Define initial data
@@ -29,7 +39,7 @@
             var barPadding = 5;  
             var barWidth = (svgWidth / originalData.length);
             //Define time to wait between animations in ms
-            var sleepTime= 500;
+            var sleepTime= 200;
             //Set the default container's size
             var svg = d3.select('svg')
             .attr("width", svgWidth)
@@ -46,18 +56,40 @@
 
             //Set on click listeners
             $("#bubbleSort").click(function(){
-                bubbleSort(originalData);
+                selectBubbleSort();
+                resetBars(originalData);
+                $("h1").text("Bubble Sort");
             });
             $("#reset").click(function(){
                 resetBars(originalData);
             });
             $("#insertionSort").click(function(){
-                insertionSort(originalData);
+                selectInsertionSort();
+                resetBars(originalData);
+                $("h1").text("Insertion Sort");
+            });
+            $("#sort").click(function(){
+                sort(originalData);
             });
 
+            //initaite sort function
+            function sort(dataset){
+                if(sortMethod==1){
+                    bubbleSort(dataset);
+                }else if(sortMethod==2){
+                    insertionSort(dataset);
+                }
+            }
 
+
+            function selectBubbleSort(){
+                done=true;
+                sleep(20);
+                sortMethod = 1;
+            }
             //Bubble sort function
             async function bubbleSort(dataset){
+                done = false;
                 for(var i = 0; i < dataset.length-1; i++){
                     for(var j = 0; j < dataset.length-i-1; j++){
                         //Show the bar in red that we are comparing
@@ -70,17 +102,32 @@
                             generateBars(dataset,j+1, null);
                             await sleep(sleepTime);
                         }
+                        if(done){
+                            return;
+                        }
                     } 
                 }
                 console.log(dataset);
             }
 
+            function selectInsertionSort(){
+                done = true;
+                sleep(20);
+                sortMethod = 2;
+            }
             //Insertion Sort function
             async function insertionSort(data){
+                done = false;
                 for(var i = 1; i < data.length; i++){
+                    if(done){
+                            return;
+                        }
                     var current = data[i];
                     var j = i-1;
                     while((j >= 0) && (current < data[j])){
+                        if(done){
+                            return;
+                        }
                         data[j+1] = data[j];
                         generateBars(data, j+1, i);
                         await sleep(sleepTime);
@@ -120,6 +167,8 @@
             }
 
             function resetBars(data){
+                done = true;
+                sleep(400);
                 var barChart = svg.selectAll("rect")  
                 .data(shuffle(data))  
                 .style('fill', '#3c763d')
