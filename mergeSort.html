@@ -106,8 +106,6 @@ while (switched)
                 stopSort = !stopSort;
             });
 
-
-
             // non recursive merge sort, bottoms up!
 
             function bottomUpMergeSort(dataset) {
@@ -130,18 +128,16 @@ while (switched)
                         let end = Math.min(i+2*width, n);
                         for(let j=left; j<end; j++){
                             if(stopSort) return;
-                            console.log("moving ", dataset[j], "down");
+                            if(j<right) changeColor(j,"red");
+                            else changeColor(j,"blue");                            
                             move(j,0,-1);
                             await sleep(sleepTime);
                         }
                         bottomUpMerge(dataset, left, right, end);
-                        // console.log("waiting for sleepTime *", 5*width);
                         await sleep(sleepTime*3*width);
                     }
                 }
             }
-            // var to keep count steps for console
-            var reps = 0;
 
             async function bottomUpMerge(dataset, left, right, end) {
                 var n = left,
@@ -150,61 +146,25 @@ while (switched)
                     j,k;
                 
                 for(j=left; j<end; j++) {
-                    // await sleep(sleepTime);
                     if(stopSort) return;
                     if(n<right && (m>=end || dataset[n]<dataset[m])) {
                         currentSort.push(dataset[n]);
-                        // console.log('j:', j, 'n:', n);
+                        changeColor(n,'#3c763d');
                         move(n, j-n, 1);
                         await sleep(sleepTime);
-                        // if(n!=j){
-                            // for(let i=0; i<j-n; i++) {
-                            //     moveRight(n);
-                            //     await sleep(sleepTime);
-                            //     console.log("moving", dataset[n], "to the right");
-                            // }
-                        // }
-                        // console.log('moving', dataset[n]);
-                        // moveUp(n);
-                        
                         n++;
                     }
                     else{
                         currentSort.push(dataset[m]);
-                        // console.log('j:', j, 'm:', m);
-                        // console.log('moving', dataset[m], "up");
-                        // moveUp(m);
+                        changeColor(m,'#3c763d');
                         move(m, -1*(m-j), 1);
                         await sleep(sleepTime);
-                        // if(m!=j){
-                        //     for(let i=0; i<m-j; i++) {
-                        //         moveLeft(m);
-                        //         await sleep(sleepTime);
-                        //         console.log("moving", dataset[m], "to the left");
-                        //     }
-                            // await sleep(sleepTime);
-                        // }
                         m++;
                     }
-                    // console.log(reps, "in for loop", currentSort);
-                    reps++;
                 }
                 currentSort.map(function(data,i) { dataset[left + i] = data; });
-                // console.log(reps, dataset);
-                reps++;
-                // generateBars(dataset);
             }
     
-            function swapPositions(num1, num2) { 
-                let gRight = findElement(num1);
-                let gLeft = findElement(num2);
-                let hRight = parseInt(gRight.select("rect").attr("height"));
-                let hLeft = parseInt(gLeft.select("rect").attr("height"));
-                gRight.transition().attr("transform", "translate(" + (barWidth * (num2)) + "," + (svgHeight-hRight-100) + ")");
-                gLeft.transition().attr("transform", "translate(" + (barWidth * (num1)) + "," + (svgHeight-hLeft-100) + ")");
-                swapPositionID(num1, num2);
-            }
-
 
             function resetBars(data){
                 ////// currently not used in 'reset'
@@ -218,40 +178,6 @@ while (switched)
                 barChart.select("rect")
                 .attr("height",function(d) {return d;})
                 .attr('fill', '#3c763d');
-
-                barChart.select("text")
-                .attr("x",(barWidth-barPadding)/2)
-                .text(function(d) {return d;});
-            }
-
-            //Function to show all the bars
-            function generateBars(data){
-                var yAdjust = 300;
-                if (stopSort) return;
-                //Generate all the bars
-                var barChart = svg.selectAll("g")  
-                .data(data)
-                .transition()
-                .attr("transform", function(d, i){return "translate(" + (barWidth * i) + "," + (svgHeight-d-yAdjust) + ")";});
-                
-                barChart.select("rect")
-                .attr("height",function(d) {return d;})
-
-                barChart.select("text")
-                .attr("x",(barWidth-barPadding)/2)
-                .text(function(d) {return d;});
-            }
-            
-            //refreshes the position id's
-            function refreshPositionIds(data){
-                var yAdjust = 300;
-                //Generate all the bars
-                var barChart = svg.selectAll("g")  
-                .data(data)
-                .attr("transform", function(d, i){return "translate(" + (barWidth * i) + "," + (svgHeight-d-yAdjust) + ")";});
-                
-                barChart.select("rect")
-                .attr("height",function(d) {return d;})
 
                 barChart.select("text")
                 .attr("x",(barWidth-barPadding)/2)
