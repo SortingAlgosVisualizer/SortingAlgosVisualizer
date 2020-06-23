@@ -178,6 +178,7 @@ function changeColor(num, color){
     bar.select("rect").transition().attr("fill",color);
 }
 
+
 //Finds by position ID and returns the entire element
 function findElement(position){
     position += 1;
@@ -204,4 +205,12 @@ function loadTitle(sortType) {
         return;
     }
     d3.select(".title-p").transition().text(sortType).style("display","inline");
+}
+
+function createZeroArray(length){
+    var arr = [];
+    for(var i = 0; i < length; i++){
+        arr.push(0);
+    }
+    return arr;
 }

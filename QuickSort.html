@@ -65,7 +65,7 @@
             var svgWidth = 500;
             var svgHeight = 600;
             //Define initial data
-            var originalData = [33, 62, 44, 14, 80, 100, 10, 30];
+            var originalData = [33, 62, 44, 14, 80, 100, 10, 30, 50, 22];
             //Define display padding and width of bars
             var barPadding = 5;  
             var barWidth = Math.floor(svgWidth / originalData.length);
@@ -97,20 +97,24 @@
                 console.log(originalData);
             });
 
+            var finished = createZeroArray(originalData.length);
 
             async function quickSortPartition(data, first, last){
-                var sleepTime = 1000;
+                var sleepTime = 500;
                 //Set last value in array as the pivot value
                 var pivot = data[last];
                 changeColor(last, "yellow");
+                await sleep(sleepTime);
                 //Keep track of the next value that is larger than the pivot
                 var i = first;
                 //Loop through all values to move all values smaller than pivot to left side of pivot and all values greater to the right
                 for(var j = first; j < last; j++){
                     //Change color of bar we are looking at
-                    changeColor(j, "blue");
+                    changeColor(j, "red");
                     await sleep(sleepTime);
                     if(data[j] <= pivot){
+                        changeColor(j, "green");
+                        await sleep(sleepTime);
                         var temp = data[j];
                         data[j] = data[i];
                         data[i] = temp;
@@ -120,6 +124,9 @@
                             await sleep(sleepTime);
                         }
                         i++;
+                    }else{
+                        changeColor(j, "purple");
+                        await sleep(sleepTime);
                     }
                 }
                 //Swap pivot with the next value that is larger than the pivot
@@ -129,13 +136,17 @@
                 await swapPosition(i, last);
                 //set pivot to different color to show it is in final position
                 changeColor(i, "orange");
+                finished[i] = 1;
                 await sleep(sleepTime);
                 //Reset the position IDs
                 await refreshPositionIds(data);
-                //Set all bars back to original color
-                for(var index = 0; index < data; index++){
-                    changeColor(index, "green");
-                    console.log("color changed");
+                //set all finished back to orange;
+                for(var index = 0; index < finished.length; index++){
+                    if(finished[index] == 1){
+                        changeColor(index, "orange");
+                    }else{
+                        changeColor(index, "gray");
+                    }
                 }
                 //Return where the new pivot will be
                 return i;
@@ -164,6 +175,8 @@
                         stack.push(last);
                     }
                 }
+                //Change all to orange
+                changeColor(-1, "orange");
             }
 
 
