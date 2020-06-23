@@ -1,7 +1,32 @@
 //Set the transition duration
-var transitionDuration = 500;
+var transitionDuration = 100;
 //Set the moveUp and moveDown distance
 var verticalMoveDistance = 200;
+
+//Move bar at index, delas are given in units of how many indexes to move(negative = left or down, positive = right or up)
+function move(index, deltaX, deltaY){
+    var item = findElement(index);
+    var coord = parseTransform(item);
+    coord[0] = coord[0] + barWidth*deltaX;
+    coord[1] = coord[1] - verticalMoveDistance*deltaY;
+    item.transition().duration(transitionDuration).attr("transform", "translate(" + coord[0] + "," + coord[1] + ")");
+}
+
+// basically generate bars without the transition
+function refreshPositionIds(data){
+    var yAdjust = 300;
+    //Generate all the bars
+    var barChart = svg.selectAll("g")  
+    .data(data)
+    .attr("transform", function(d, i){return "translate(" + (barWidth * i) + "," + (svgHeight-d-yAdjust) + ")";});
+    
+    barChart.select("rect")
+    .attr("height",function(d) {return d;})
+
+    barChart.select("text")
+    .attr("x",(barWidth-barPadding)/2)
+    .text(function(d) {return d;});
+}
 
 //Move item down
 function moveDown(index){
