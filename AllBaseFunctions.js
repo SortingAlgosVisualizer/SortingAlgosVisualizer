@@ -81,8 +81,8 @@ function refreshPositionIds(data){
     //Generate all the bars
     var barChart = svg.selectAll("g")  
     .data(data)
-    .attr("transform", function(d, i){return "translate(" + (barWidth * i) + "," + (svgHeight-d-yAdjust) + ")";});
-    
+    .attr("transform", function(d, i){return "translate(" + (barWidth * i) + "," + (svgHeight-d-yAdjust) + ")";})
+    .attr("positionID", function(d,i){return "p"+(i+1);});
     barChart.select("rect")
     .attr("height",function(d) {return d;})
 
