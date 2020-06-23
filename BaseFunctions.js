@@ -1,23 +1,23 @@
 //Set the transition duration
 var transitionDuration = 500;
+//Set the moveUp and moveDown distance
+var verticalMoveDistance = 200;
 
 //Move item down
 function moveDown(index){
     //Set how far we move the item down
-    var downDistance = 100;
     var item = findElement(index);
     var coord = parseTransform(item);
-    coord[1] = coord[1] + downDistance;
+    coord[1] = coord[1] + verticalMoveDistance;
     item.transition().duration(transitionDuration).attr("transform", "translate(" + coord[0] + "," + coord[1] + ")");
 }
 
 //Move item up
 function moveUp(index){
     //Set how far we move the item down
-    var upDistance = 100;
     var item = findElement(index);
     var coord = parseTransform(item);
-    coord[1] = coord[1] - upDistance;
+    coord[1] = coord[1] - verticalMoveDistance;
     item.transition().duration(transitionDuration).attr("transform", "translate(" + coord[0] + "," + coord[1] + ")");
 }
 
