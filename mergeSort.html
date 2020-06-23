@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <title>Title</title>
+        <!-- Required meta tags -->
+        <meta charset="ISO-8859-1">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <style>.lineval {font-size: 14px; font-family: Verdana, Geneva, Tahoma, sans-serif;color:darkorange;}</style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="col text-center">        
+                    <svg></svg>
+                </div>
+            </div>
+            <div class="row"><p></p></div>
+            <div class="row">
+                <div class="col text-center">
+                    <button id="bubbleSort" class="btn btn-primary">Bubble Sort</button>
+                    <button id="insertionSort" class="btn btn-primary">Insertion Sort</button>
+                    <button id="mergeSort" class="btn btn-primary">Merge Sort</button>
+                    <button id="reset" class="btn btn-secondary">Reset</button>
+                </div>
+            </div>
+            <div class="row pseudocode">
+                <div class="col text-center">
+                    <div class="row">
+                        <div class="col-4"></div>
+                        <div class="col-4 text-left code2">
+<p><pre class="line1">
+while (switched)
+</pre></p>
+<p><pre class="line2">
+    switched = false
+    for i = 1 to lastsort-1
+</pre></p>
+<p><pre class="line3">
+        if left value > right value
+            swap(left value, right value)
+            switched = true
+</pre></p>
+<p><pre class="line4">
+    lastsort--
+</pre></p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-4"></div>
+                        <div class="col-4 text-center code1">
+                            <p class="lineval"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>            
+        </div>
+        <!-- Optional JavaScript -->
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        <script src="https://d3js.org/d3.v5.min.js"></script>
+        <script src="BaseFunctions.js"></script>
+        <script>
+            //Define the main container size
+            var svgWidth = 500;
+            var svgHeight = 600;
+            //Define initial data
+
+            var originalData = randomArray(15, 200);
+            //Define display padding and width of bars
+            var barPadding = 5;  
+            var barWidth = Math.floor((svgWidth / originalData.length));
+            //Define time to wait between animations in ms
+            var sleepTime= 200;
+            ////// set a flag to stop async function call when reset is triggered
+            var stopSort = false;
+            //Set the default container's size
+            var svg = d3.select('svg')
+            .attr("width", svgWidth)
+            .attr("height", svgHeight)
+            .attr("class", "bar-chart");
+            //Show initial data shuffled
+            initialBars(shuffle(originalData));
+
+            //Set on click listeners
+
+            $("#reset").click(function(){
+                ////// set stopSort flag to true, remove pseudocode, replace content of svg completely
+                stopSort = true;
+                loadPseudocode(-1);
+                var currentchart = svg.selectAll("g").remove();
+                shuffle(originalData);
+                initialBars(originalData);
+
+            });
+
+            $("#mergeSort").click(function(){
+                stopSort = true;
+                resetBars(originalData);
+                bottomUpMergeSort(originalData);
+            });
+
+
+
+            // non recursive merge sort, bottoms up!
+
+            function bottomUpMergeSort(dataset) {
+                stopSort = false;
+                let array = dataset.map(function(data) { return data; });
+                bottomUpSort(array, array.length);
+                return array;
+            }
+            
+            async function bottomUpSort(dataset, n) {
+                var width,
+                    i;
+                for(width=1; width<n; width=width*2) {
+                    for(i=0; i<n; i=i+2*width) {
+                        await sleep(sleepTime*8);
+                        let left = i;
+                        let right = Math.min(i+width, n);
+                        let end = Math.min(i+2*width, n);
+                        for(let j=left; j<end; j++){
+                            moveDown(j);
+                            await sleep(sleepTime);
+                        }
+                        bottomUpMerge(dataset, left, right, end);
+                    }
+                }
+            }
+            // var to keep count steps for console
+            var reps = 0;
+
+            async function bottomUpMerge(dataset, left, right, end) {
+                var n = left,
+                    m = right,
+                    currentSort = [],
+                    j,k;
+                
+                for(j=left; j<end; j++) {
+                    await sleep(sleepTime);
+                    if(n<right && (m>=end || dataset[n]<dataset[m])) {
+                        currentSort.push(dataset[n]);
+                        n++;
+                    }
+                    else{
+                        currentSort.push(dataset[m]);
+                        console.log('swapping', n, 'with', m);
+                        swapPosition(n,m);
+                        await sleep(sleepTime);
+                        m++;
+                    }
+                    console.log(reps, "in for loop", currentSort);
+                    reps++;
+                }
+                currentSort.map(function(data,i) { dataset[left + i] = data; });
+                console.log(reps, dataset);
+                reps++;
+                generateBars(dataset);
+            }
+    
+
+            function resetBars(data){
+                ////// currently not used in 'reset'
+                var yAdjust = 300;
+                stopSort = true;
+                var barChart = svg.selectAll("g")  
+                .data(shuffle(data))
+                .transition()
+                .attr("transform", function(d, i){return "translate(" + (barWidth * i) + "," + (svgHeight-d-yAdjust) + ")";});
+                
+                barChart.select("rect")
+                .attr("height",function(d) {return d;})
+                .attr('fill', '#3c763d');
+
+                barChart.select("text")
+                .attr("x",(barWidth-barPadding)/2)
+                .text(function(d) {return d;});
+            }
+
+            //Function to show all the bars
+            function generateBars(data){
+                var yAdjust = 300;
+                if (stopSort) return;
+                //Generate all the bars
+                var barChart = svg.selectAll("g")  
+                .data(data)
+                .transition()
+                .attr("transform", function(d, i){return "translate(" + (barWidth * i) + "," + (svgHeight-d-yAdjust) + ")";});
+                
+                barChart.select("rect")
+                .attr("height",function(d) {return d;})
+
+                barChart.select("text")
+                .attr("x",(barWidth-barPadding)/2)
+                .text(function(d) {return d;});
+            }
+
+            //randomize dataset
+            function shuffle(dataset){
+                for(var i = 0; i < dataset.length; i++){
+                    var j = Math.floor(Math.random()*dataset.length)
+                    var temp = dataset[i];
+                    dataset[i] = dataset[j];
+                    dataset[j] = temp;
+                }
+                return dataset;
+            }
+
+            function loadPseudocode(num) {
+                ////// highlight appropriate line in pseudocode and show explanation for currently highlighted line
+                var codeDict = {
+                    "line1": "If there was no swap during the entire for loop, array is now sorted",
+                    "line2": "Start each 'for' loop with switched = false, and iterate until the last unsorted position",
+                    "line3": "If value at (i-1) is greater than value at (i), swap the two values and set switched flag to true",
+                    "line4": "Last position of each 'for' loop is sorted"
+                }
+                ////// if num = -1, remove code and hide pseudocode div
+                if (num===-1) {
+                    d3.select(".lineval").text("");
+                    for (var y = 0; y<=4; y++) {
+                        d3.select(".line" + y).style("background-color","white")
+                        .style("color","black");
+                    }
+                    d3.select(".pseudocode").style("display","none");
+                    return;
+                }
+                if (stopSort) return;
+                ////// if num in [1,4], highlight pseudocode at line = num
+                d3.select(".pseudocode").style("display","block");
+                let code;
+                for (var z = 1; z<=4; z++) {
+                    code = d3.select(".line" + z)
+                    if (z === num) {
+                        code.style("background-color","black")
+                        .style("color","white");
+                    } else {
+                        code.style("background-color","white")
+                        .style("color","black");
+                    }
+                }
+                d3.select(".lineval").text(codeDict["line" + num]);
+            }
+        </script>
+    </body>
+</html>
