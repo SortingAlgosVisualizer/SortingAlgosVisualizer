@@ -61,7 +61,7 @@ while (switched)
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
         <script src="https://d3js.org/d3.v5.min.js"></script>
-        <script src="BaseFunctions.js"></script>
+        <script src="AllBaseFunctions.js"></script>
         <script>
             //Define the main container size
             var svgWidth = 500;
@@ -89,7 +89,7 @@ while (switched)
             $("#reset").click(function(){
                 ////// set stopSort flag to true, remove pseudocode, replace content of svg completely
                 stopSort = true;
-                loadPseudocode(-1);
+                // loadPseudocode(-1);
                 var currentchart = svg.selectAll("g").remove();
                 shuffle(originalData);
                 initialBars(originalData);
@@ -98,7 +98,7 @@ while (switched)
 
             $("#mergeSort").click(function(){
                 stopSort = true;
-                resetBars(originalData);
+                // resetBars(originalData);
                 bottomUpMergeSort(originalData);
             });
 
@@ -164,36 +164,8 @@ while (switched)
                 }
                 currentSort.map(function(data,i) { dataset[left + i] = data; });
             }
-    
 
-            function resetBars(data){
-                ////// currently not used in 'reset'
-                var yAdjust = 300;
-                stopSort = true;
-                var barChart = svg.selectAll("g")  
-                .data(shuffle(data))
-                .transition()
-                .attr("transform", function(d, i){return "translate(" + (barWidth * i) + "," + (svgHeight-d-yAdjust) + ")";});
-                
-                barChart.select("rect")
-                .attr("height",function(d) {return d;})
-                .attr('fill', '#3c763d');
 
-                barChart.select("text")
-                .attr("x",(barWidth-barPadding)/2)
-                .text(function(d) {return d;});
-            }
-
-            //randomize dataset
-            function shuffle(dataset){
-                for(var i = 0; i < dataset.length; i++){
-                    var j = Math.floor(Math.random()*dataset.length)
-                    var temp = dataset[i];
-                    dataset[i] = dataset[j];
-                    dataset[j] = temp;
-                }
-                return dataset;
-            }
 
             function loadPseudocode(num) {
                 ////// highlight appropriate line in pseudocode and show explanation for currently highlighted line
