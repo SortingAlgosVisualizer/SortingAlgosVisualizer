@@ -80,7 +80,7 @@
             .attr("height", svgHeight)
             .attr("class", "bar-chart");
             //Show initial data shuffled
-            initialBars(shuffle(originalData));
+            initialBars(originalData);
 
             //Set on click listeners
             $("#bubbleSort").click(function(){
@@ -105,25 +105,34 @@
             //Insertion Sort function
             async function insertionSort(data){
                 var tempData = data;
-                var time = 1500;
+                var time = 1000;
                 for(var i = 1; i < data.length; i++){
                     var current = data[i];
-                    moveDown(i);
-                    changeColor(i, "red");
+                    var moving = i;
+                    moveDown(moving);
+                    changeColor(moving, "red");
                     await sleep(time);
                     var j = i-1;
                     while((j >= 0) && (current < data[j])){
                         changeColor(j, "blue");
                         await sleep(time);
-                        moveLeft(i);
                         moveRight(j);
+                        changeColor(j, "green");
+                        moveLeft(moving);
                         await sleep(time);
                         data[j+1] = data[j];
+                        swapPositionID(j+1, j);
                         j--;
+                        moving--;
                     }
-                    moveUp(i);
-                    changeColor(i, "orange");
-                    await sleep(time);
+                    //Make sure j is not negative or else all elements will change color
+                    if(j >= 0){
+                        changeColor(j, "blue");
+                        await sleep(time);
+                        changeColor(j, "green");
+                    }
+                    moveUp(j+1);
+                    changeColor(j+1, "green");
                     data[j+1] = current;
                 }
             }

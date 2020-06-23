@@ -1,3 +1,6 @@
+//Set the transition duration
+var transitionDuration = 500;
+
 //Move item down
 function moveDown(index){
     //Set how far we move the item down
@@ -5,7 +8,7 @@ function moveDown(index){
     var item = findElement(index);
     var coord = parseTransform(item);
     coord[1] = coord[1] + downDistance;
-    item.transition().duration(1000).attr("transform", "translate(" + coord[0] + "," + coord[1] + ")");
+    item.transition().duration(transitionDuration).attr("transform", "translate(" + coord[0] + "," + coord[1] + ")");
 }
 
 //Move item up
@@ -15,7 +18,7 @@ function moveUp(index){
     var item = findElement(index);
     var coord = parseTransform(item);
     coord[1] = coord[1] - upDistance;
-    item.transition().duration(1000).attr("transform", "translate(" + coord[0] + "," + coord[1] + ")");
+    item.transition().duration(transitionDuration).attr("transform", "translate(" + coord[0] + "," + coord[1] + ")");
 }
 
 //Move item left
@@ -25,7 +28,7 @@ function moveLeft(index){
     var item = findElement(index);
     var coord = parseTransform(item);
     coord[0] = coord[0] - leftDistance;
-    item.transition().duration(1000).attr("transform", "translate(" + coord[0] + "," + coord[1] + ")");
+    item.transition().duration(transitionDuration).attr("transform", "translate(" + coord[0] + "," + coord[1] + ")");
 }
 
 //Move item right
@@ -35,7 +38,7 @@ function moveRight(index){
     var item = findElement(index);
     var coord = parseTransform(item);
     coord[0] = coord[0] + rightDistance;
-    item.transition().duration(1000).attr("transform", "translate(" + coord[0] + "," + coord[1] + ")");
+    item.transition().duration(transitionDuration).attr("transform", "translate(" + coord[0] + "," + coord[1] + ")");
 }
 
 //Pass in entire element and output is an array with the [x, y] of the transform attribute
