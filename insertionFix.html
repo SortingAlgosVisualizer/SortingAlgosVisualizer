@@ -75,7 +75,7 @@
             var svgWidth = 500;
             var svgHeight = 600;
             //Define initial data
-            var originalData = [33, 62, 44, 14, 80, 100, 56, 120, 180, 30, 40, 120, 10, 10, 10];
+            var originalData = randomArray(15,150);
             //Define display padding and width of bars
             var barPadding = 5;  
             var barWidth = Math.floor((svgWidth - barPadding) / originalData.length);
@@ -96,18 +96,21 @@
                 stopSort = true;
                 bubbleSort(originalData);
             });
+
             $("#reset").click(function(){
                 stopSort = true;
                 loadPseudocode("bubblesort",-1);
                 loadTitle("reset");
                 var currentchart = svg.selectAll("g").remove();
-                initialBars(randomArray(15,150));
-
+                originalData = randomArray(15,150);
+                initialBars(originalData);
             });
+
             $("#insertionSort").click(function(){
                 stopSort = true;
                 insertionSort(originalData);
             });
+
             $("#selectionSort").click(function(){
                 stopSort = true;
                 selectionSort(originalData);
@@ -170,11 +173,10 @@
                 stopSort = false;
                 loadTitle("Insertion Sort");
                 var tempData = data;
-                var time = 1000;
                 loadPseudocode("insertionsort",0)
                 loadPseudocode("insertionsort",2)
                 if (stopSort) return;
-                await sleep(time+500);
+                await sleep(sleepTime*2);
                 if (stopSort) return;
                 for(var i = 1; i < data.length; i++){
                     var current = data[i];
@@ -183,20 +185,20 @@
                     moveDown(moving);
                     changeColor(moving, "#ffb83d");
                     if (stopSort) return;
-                    await sleep(time+800);
+                    await sleep(sleepTime*3);
                     if (stopSort) return;
                     var j = i-1;
                     while((j >= 0) && (current < data[j])){
                         if (stopSort) return;
                         loadPseudocode("insertionsort",4)
                         changeColor(j, "#db5e4d");
-                        await sleep(time);
+                        await sleep(sleepTime);
                         if (stopSort) return;
                         moveRight(j);
                         changeColor(j, "#475951");
                         moveLeft(moving);
                         if (stopSort) return;
-                        await sleep(time);
+                        await sleep(sleepTime);
                         if (stopSort) return;
                         data[j+1] = data[j];
                         swapPositionID(j+1, j);
@@ -208,7 +210,7 @@
                     if(j >= 0){
                         if (stopSort) return;
                         changeColor(j, "#db5e4d");
-                        await sleep(time);
+                        await sleep(sleepTime);
                         if (stopSort) return;
                         changeColor(j, "#475951");
                     } 
@@ -219,7 +221,7 @@
                 }
                 loadPseudocode("insertionsort",1);
                 if (stopSort) return;
-                await sleep(sleepTime+1500);
+                await sleep(sleepTime*4);
                 if (stopSort) return;
                 loadPseudocode("insertionsort",-1);
             }
@@ -235,7 +237,7 @@
                     let minPosition = i;
                     changeColor(i,"#7e848f");
                     loadPseudocode("selectsort",2);
-                    await sleep(sleepTime+1000);
+                    await sleep(sleepTime*3);
                     if (stopSort) return;
                     for (var j = i+1;j<endLoop;j++) {
                         if (stopSort) return;
@@ -259,12 +261,12 @@
                     changeColor(i,"#ffb83d");
                     loadPseudocode("selectsort",4);
                     if (stopSort) return;
-                    await sleep(sleepTime+1000);
+                    await sleep(sleepTime*3);
                     if (stopSort) return;
                     if (minPosition != i) {
                         swapPosition(i,minPosition);
                         if (stopSort) return;
-                        await sleep(sleepTime+1500);
+                        await sleep(sleepTime*4);
                         if (stopSort) return;
                         changeColor(minPosition,"#475951")
                     }
@@ -274,7 +276,7 @@
                 }
                 loadPseudocode("selectsort",1);
                 if (stopSort) return;
-                await sleep(sleepTime+2000);
+                await sleep(sleepTime*5);
                 if (stopSort) return;
                 loadPseudocode("selectsort",-1);
                 // finishBarColor(-1);

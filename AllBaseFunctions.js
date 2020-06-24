@@ -1,5 +1,8 @@
 //Set the transition duration
 var transitionDuration = 100;
+//Define time to wait between animations in ms
+var sleepTime = 3*transitionDuration;
+
 //Set the moveUp and moveDown distance
 var verticalMoveDistance = 200;
 //Define initial height of bars above bottom of svg container
