@@ -86,7 +86,7 @@
         <script>
 
 
-            //tried to impliment a slider to control speed, could not get it to update the proper value
+            // tried to impliment a slider to control speed, could not get it to update the proper value
             // var transitionDuration = 100;
             // var sleepTime = 3*transitionDuration;
             // //SpeedSlider
@@ -98,6 +98,10 @@
             //     output.innerHTML = this.value;
             //     transitionDuration = this.value;
             // }
+
+            // $("#speed").change(function(){
+            //     transitionDuration = this.value;
+            // });
 
             //Define the main container size
             var svgWidth = 1000;
@@ -142,6 +146,7 @@
             });
 
             $("#startSorting").click(function(){
+                console.log(transitionDuration);
                 if(canSort){
                     stopSort = true;
                     if(selectedSort == 1) bubbleSort(originalData);
