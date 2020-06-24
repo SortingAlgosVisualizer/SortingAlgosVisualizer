@@ -8,6 +8,19 @@ var verticalMoveDistance = 200;
 //Define initial height of bars above bottom of svg container
 var yAdjust = 300;
 
+//Define colors
+var colors = {
+    "selected": "yellow",
+    "compare" : "red",
+    "lower": "green",
+    "higher": "purple",
+    "finished": "orange",
+    "default": "gray",
+    "black": "black",
+    "white": "white"
+};
+
+
 function initialBars(data){
     // loadPseudocode("bubblesort",-1);// took out this line for now
     ////// create a g tag first to group rect and text
@@ -23,12 +36,12 @@ function initialBars(data){
     .attr("height",function(d) {return d;})
     .attr("width",barWidth-barPadding)
     .attr("rx",5)
-    .attr('fill', '#475951');
+    .attr('fill', colors['default']);
 
     barChart.append("text")
     .attr("x",(barWidth-barPadding)/2)
     .attr("text-anchor", "middle")
-    .style("fill","#80756f")
+    .style("fill",colors["black"])
     .text(function(d) {return d;});
 }
 
@@ -171,14 +184,15 @@ function parseTransform(element){
 }
 
 //swap color function, takes bar num and color
+//color should be one of the color keys
 function changeColor(num, color){
     if (num===-1) {
         let bars = svg.selectAll("g")
-        bars.select("rect").transition().attr("fill",color);
+        bars.select("rect").transition().attr("fill",colors[color]);
         return;
     }
     let bar = findElement(num);
-    bar.select("rect").transition().attr("fill",color);
+    bar.select("rect").transition().attr("fill",colors[color]);
 }
 
 

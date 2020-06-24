@@ -130,8 +130,8 @@
                     for (var i = 1; i < endsort; i++) {
                         loadPseudocode("bubblesort",3)
                         if (stopSort) return;
-                        changeColor(i,"#ffb83d");
-                        changeColor(i-1,"#ffb83d");
+                        changeColor(i,"selected");
+                        changeColor(i-1,"selected");
                         await sleep(sleepTime);
                         if (stopSort) return;
                         let vRight = parseInt(findElement(i).select("text").text());
@@ -144,11 +144,11 @@
                             await sleep(sleepTime-100);
                             if (stopSort) return;
                         }
-                        changeColor(i,"#475951");
-                        changeColor(i-1,"#475951");
+                        changeColor(i,"default");
+                        changeColor(i-1,"default");
                     }
                     // finishBarColor(endsort);
-                    changeColor(endsort-1,"#db5e4d");
+                    changeColor(endsort-1,"finished");
                     loadPseudocode("bubblesort",4);
                     if (stopSort) return;
                     await sleep(sleepTime+1000);
@@ -161,7 +161,7 @@
                 if (stopSort) return;
                 loadPseudocode("bubblesort",-1);
                 // finishBarColor(-1);
-                changeColor(-1,"#db5e4d");
+                changeColor(-1,"black");
 
             }
 
@@ -181,7 +181,7 @@
                     var moving = i;
                     loadPseudocode("insertionsort",3)
                     moveDown(moving);
-                    changeColor(moving, "#ffb83d");
+                    changeColor(moving, "compare");
                     if (stopSort) return;
                     await sleep(time+800);
                     if (stopSort) return;
@@ -189,11 +189,11 @@
                     while((j >= 0) && (current < data[j])){
                         if (stopSort) return;
                         loadPseudocode("insertionsort",4)
-                        changeColor(j, "#db5e4d");
+                        changeColor(j, "selected");
                         await sleep(time);
                         if (stopSort) return;
                         moveRight(j);
-                        changeColor(j, "#475951");
+                        changeColor(j, "finished");
                         moveLeft(moving);
                         if (stopSort) return;
                         await sleep(time);
@@ -207,14 +207,14 @@
                     if (stopSort) return;
                     if(j >= 0){
                         if (stopSort) return;
-                        changeColor(j, "#db5e4d");
+                        changeColor(j, "selected");
                         await sleep(time);
                         if (stopSort) return;
-                        changeColor(j, "#475951");
+                        changeColor(j, "finished");
                     } 
                     if (stopSort) return;
                     moveUp(j+1);
-                    changeColor(j+1, "#475951");
+                    changeColor(j+1, "finished");
                     data[j+1] = current;
                 }
                 loadPseudocode("insertionsort",1);
@@ -233,13 +233,13 @@
                 for (var i = 0; i<endLoop-1;i++) {
                     if (stopSort) return;
                     let minPosition = i;
-                    changeColor(i,"#7e848f");
+                    changeColor(i,"default");
                     loadPseudocode("selectsort",2);
                     await sleep(sleepTime+1000);
                     if (stopSort) return;
                     for (var j = i+1;j<endLoop;j++) {
                         if (stopSort) return;
-                        changeColor(j,"#db5e4d");
+                        changeColor(j,"selected");
                         loadPseudocode("selectsort",3);
                         await sleep(sleepTime);
                         if (stopSort) return;
@@ -247,16 +247,16 @@
                         let minVal = parseInt(findElement(minPosition).select("text").text());
                         if (lookupVal < minVal) {
                             
-                            changeColor(j,"#ffb83d");
-                            changeColor(minPosition,"#475951");
-                            changeColor(i,"#7e848f")
+                            changeColor(j,"lower");
+                            changeColor(minPosition,"default");
+                            changeColor(i,"default")
                             minPosition = j;
                         } else {
-                            changeColor(j,"#475951");
+                            changeColor(j,"default");
                         }
 
                     }
-                    changeColor(i,"#ffb83d");
+                    changeColor(i,"higher");
                     loadPseudocode("selectsort",4);
                     if (stopSort) return;
                     await sleep(sleepTime+1000);
@@ -266,11 +266,11 @@
                         if (stopSort) return;
                         await sleep(sleepTime+1500);
                         if (stopSort) return;
-                        changeColor(minPosition,"#475951")
+                        changeColor(minPosition,"default")
                     }
                     
                     if (stopSort) return;
-                    changeColor(i,"#475951");
+                    changeColor(i,"finished");
                 }
                 loadPseudocode("selectsort",1);
                 if (stopSort) return;
@@ -278,7 +278,7 @@
                 if (stopSort) return;
                 loadPseudocode("selectsort",-1);
                 // finishBarColor(-1);
-                changeColor(-1,"#DD9C90");
+                changeColor(-1,"lower");
 
             }
 
