@@ -316,8 +316,8 @@
                         let end = Math.min(i+2*width, n);
                         for(let j=left; j<end; j++){
                             if(stopSort) return;
-                            if(j<right) changeColor(j,"red");
-                            else changeColor(j,"blue");                            
+                            if(j<right) changeColor(j,"lower");
+                            else changeColor(j,"higher");                            
                             move(j,0,-1);
                             await sleep(sleepTime);
                         }
@@ -345,14 +345,14 @@
                     if(stopSort) return;
                     if(n<right && (m>=end || dataset[n]<dataset[m])) {
                         currentSort.push(dataset[n]);
-                        changeColor(n,'#3c763d');
+                        changeColor(n,'default');
                         move(n, j-n, 1);
                         await sleep(sleepTime);
                         n++;
                     }
                     else{
                         currentSort.push(dataset[m]);
-                        changeColor(m,'#3c763d');
+                        changeColor(m,'default');
                         move(m, -1*(m-j), 1);
                         await sleep(sleepTime);
                         m++;
