@@ -1,0 +1,54 @@
+Bubble sort
+
+Bubble sort is one of the simplest sorting algorithms to understand and implement and because of this it is usually the first sorting alogorith taught
+
+Each item in the list is compared to the item next to it and swapped if they are out of order
+
+The larger items seem to 'bubble' up to the end of the list
+
+While it is easy to understand, it is very inefficient with an average complexity of O(n^2)
+
+
+
+Insertion sort
+
+Insertion sort is very simple to understand and easy to implement
+
+The comparison moves through the list and the smaller items are inserted back in proper order
+
+It is similar to how people generally sort a hand of cards
+
+It is very inefficient, similar to bubble sort, with an average complexity of O(n^2)
+
+
+Selection Sort
+
+Selection sort works by subdividing a list into an unsorted and a sorted list
+
+It then finds the smallest item in the unsorted list and swaps it with the first item in the unsorted list,
+
+This becomes the last item in the sorted list
+
+It has an average time complexity of O(n^2)
+
+
+Merge Sort
+
+Merge sort is generally implemented by recursively splitting a list into smaller lists
+
+The smaller lists are then shuffled back together in order
+
+It is considered an effecient sorting algorithm and has a stable time complexity of O(n log n)
+
+Invented by John von Neumann in 1945 
+
+
+Quick Sort
+
+Quick sort works by selecting a pivot and partitioning a list into two parts, smaller and larger
+
+Each part is then sorted the same way recursively 
+
+Average time complexity O(n log n) worst case O(n^2)
+
+Invented by Tony Hoare in 1959
