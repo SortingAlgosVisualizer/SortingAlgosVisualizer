@@ -10,16 +10,29 @@ var yAdjust = 300;
 
 //Define colors
 var colors = {
-    "selected": "#f9c74f",
-    "compare" : "#f94144",
-    "lower": "#90be6d",
-    "higher": "#6930c3",
-    "finished": "#f3722c",
-    "default": "#577590",
-    "black": "black",
-    "white": "white"
+    "default" : {
+        "selected": "#f9c74f",
+        "compare" : "#f94144",
+        "lower": "#90be6d",
+        "higher": "#6930c3",
+        "finished": "#f3722c",
+        "default": "#577590",
+        "black": "black",
+        "white": "white"
+    },   
+    "colorblind": {
+        "selected": "#f9c74f",
+        "compare" : "#f94144",
+        "lower": "#90be6d",
+        "higher": "#6930c3",
+        "finished": "#f3722c",
+        "default": "#577590",
+        "black": "black",
+        "white": "white"
+    }
 };
 
+var currentTheme = colors['default'];
 
 function initialBars(data){
     // loadPseudocode("bubblesort",-1);// took out this line for now
@@ -36,14 +49,14 @@ function initialBars(data){
     .attr("height",function(d) {return d;})
     .attr("width",barWidth-barPadding)
     .attr("rx",5)
-    .attr('fill', colors['default']);
+    .attr('fill', currentTheme['default']);
 
     barChart.append("text")
     .attr("x",(barWidth-barPadding)/2)
     .attr("y", "-10")
     .attr("class", "barValue")
     .attr("text-anchor", "middle")
-    .style("fill",colors["black"])
+    .style("fill",currentTheme["black"])
     .text(function(d) {return d;});
 }
 
@@ -58,7 +71,7 @@ function resetBars(data){
     
     barChart.select("rect")
     .attr("height",function(d) {return d;})
-    .attr('fill', colors["default"]);
+    .attr('fill', currentTheme["default"]);
 
     barChart.select("text")
     .attr("x",(barWidth-barPadding)/2)
@@ -190,11 +203,11 @@ function parseTransform(element){
 function changeColor(num, color){
     if (num===-1) {
         let bars = svg.selectAll("g")
-        bars.select("rect").transition().attr("fill",colors[color]);
+        bars.select("rect").transition().attr("fill",currentTheme[color]);
         return;
     }
     let bar = findElement(num);
-    bar.select("rect").transition().attr("fill",colors[color]);
+    bar.select("rect").transition().attr("fill",currentTheme[color]);
 }
 
 
