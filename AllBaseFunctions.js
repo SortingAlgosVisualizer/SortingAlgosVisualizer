@@ -56,7 +56,7 @@ function resetBars(data){
     
     barChart.select("rect")
     .attr("height",function(d) {return d;})
-    .attr('fill', '#3c763d');
+    .attr('fill', colors["default"]);
 
     barChart.select("text")
     .attr("x",(barWidth-barPadding)/2)

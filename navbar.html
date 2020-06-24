@@ -370,7 +370,7 @@
                 //Set last value in array as the pivot value
                 loadPseudocode("quicksort",2);
                 var pivot = data[last];
-                changeColor(last, "yellow");
+                changeColor(last, "compare");
                 await sleep(sleepTime+1000);
                 if(stopSort) return;
                 //Keep track of the next value that is larger than the pivot
@@ -380,12 +380,12 @@
                 for(var j = first; j < last; j++){
                     if(stopSort) return;
                     //Change color of bar we are looking at
-                    changeColor(j, "red");
+                    changeColor(j, "selected");
                     if(stopSort) return;
                     await sleep(sleepTime);
                     if(data[j] <= pivot){
                         if(stopSort) return;
-                        changeColor(j, "green");
+                        changeColor(j, "lower");
                         await sleep(sleepTime);
                         var temp = data[j];
                         data[j] = data[i];
@@ -399,7 +399,7 @@
                         i++;
                     }else{
                         if(stopSort) return;
-                        changeColor(j, "purple");
+                        changeColor(j, "higher");
                         await sleep(sleepTime);
                     }
                 }
@@ -413,7 +413,7 @@
                 if(stopSort) return;
                 await swapPosition(i, last);
                 //set pivot to different color to show it is in final position
-                changeColor(i, "orange");
+                changeColor(i, "finished");
                 finished[i] = 1;
                 if(stopSort) return;
                 await sleep(sleepTime);
@@ -425,9 +425,9 @@
                 for(var index = 0; index < finished.length; index++){
                     if(stopSort) return;
                     if(finished[index] == 1){
-                        changeColor(index, "orange");
+                        changeColor(index, "finished");
                     } else{
-                        changeColor(index, "gray");
+                        changeColor(index, "default");
                     }
                 }
                 //Return where the new pivot will be
