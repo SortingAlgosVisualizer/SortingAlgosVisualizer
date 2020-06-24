@@ -11,28 +11,39 @@ var yAdjust = 300;
 //Define colors
 var colors = {
     "default" : {
-        "selected": "#f9c74f",
-        "compare" : "#f94144",
-        "lower": "#90be6d",
-        "higher": "#6930c3",
-        "finished": "#f3722c",
-        "default": "#577590",
+        "selected": "#f9c74f",//yellow
+        "compare" : "#f94144",//red
+        "lower": "#90be6d",//green
+        "higher": "#6930c3",//purple
+        "finished": "#f3722c",//orange
+        "default": "#577590",//bluish gray
         "black": "black",
         "white": "white"
     },   
     "colorblind": {
-        "selected": "#f9c74f",
-        "compare" : "#f94144",
-        "lower": "#90be6d",
-        "higher": "#6930c3",
-        "finished": "#f3722c",
-        "default": "#577590",
+        "selected": "#F0E442",//yellow
+        "compare" : "#D55E00",//red
+        "lower": "#009E73",//green
+        "higher": "#CC79A7",//pink
+        "finished": "#E69F00",//orange
+        "default": "#0072B2",//bluish gray
         "black": "black",
         "white": "white"
     }
 };
 
-var currentTheme = colors['default'];
+//Select color theme
+var selectedTheme = "default";
+var currentTheme = colors[selectedTheme];
+$("#colorTheme").click(function(){
+    if(selectedTheme != $(this).val()){
+        selectedTheme = $(this).val();
+        console.log("theme changed");
+        currentTheme = colors[selectedTheme];
+        console.log(originalData);
+        resetBars(originalData);
+    }
+});
 
 function initialBars(data){
     // loadPseudocode("bubblesort",-1);// took out this line for now
@@ -64,18 +75,8 @@ function initialBars(data){
 function resetBars(data){
     ////// currently not used in 'reset'
     stopSort = true;
-    var barChart = svg.selectAll("g")  
-    .data(shuffle(data))
-    .transition()
-    .attr("transform", function(d, i){return "translate(" + (barWidth * i) + "," + (svgHeight-d-yAdjust) + ")";});
-    
-    barChart.select("rect")
-    .attr("height",function(d) {return d;})
-    .attr('fill', currentTheme["default"]);
-
-    barChart.select("text")
-    .attr("x",(barWidth-barPadding)/2)
-    .text(function(d) {return d;});
+    var barChart = svg.selectAll("g").remove();  
+    initialBars(data);
 }
 
 //Randomizes input data set
