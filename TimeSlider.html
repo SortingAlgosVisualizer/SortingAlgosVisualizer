@@ -37,7 +37,7 @@
             <span class="navbar-text">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="#" id="startSorting">Start Sorting!</a>
+                        <a class="nav-link" href="#" id="startSorting" hidden="true">Start Sorting!</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#" id="reset">Reset</a>
@@ -47,11 +47,14 @@
         </div>
         </nav>
         <div class="container">
-
-            <!-- <div class="slidecontainer row">
-                <input type="range" min="50" max="400" value="100" class="slider" id="speed">
-                <p>Value: <span id="demo"></span></p>
-            </div> -->
+            
+            <div class="d-flex my-4 slider">
+                <span class="">Faster </span>
+                <div class="">
+                  <input type="range" class="custom-range" id="speed" min="50" max="300" value="150">
+                </div>
+                <span class="">Slower</span>
+            </div>
 
             <div class="row">
                 <div class="col text-center">
@@ -87,21 +90,15 @@
 
 
             // tried to impliment a slider to control speed, could not get it to update the proper value
-            // var transitionDuration = 100;
-            // var sleepTime = 3*transitionDuration;
-            // //SpeedSlider
-            // var slider = document.getElementById("speed");
-            // var output = document.getElementById("demo");
-            // output.innerHTML = slider.value;
+            var transitionDuration = 150;
+            var sleepTime = 3*transitionDuration;
+            //SpeedSlider
+            var slider = document.getElementById("speed");
 
-            // slider.oninput = function() {
-            //     output.innerHTML = this.value;
-            //     transitionDuration = this.value;
-            // }
-
-            // $("#speed").change(function(){
-            //     transitionDuration = this.value;
-            // });
+            $("#speed").change(function(){
+                transitionDuration = this.value;
+                sleepTime = 3*transitionDuration;
+            });
 
             //Define the main container size
             var svgWidth = 1000;
@@ -163,6 +160,7 @@
                 selectedSort = 1;
                 loadTitle("Bubble Sort");
                 refreshData();
+                $("#startSorting").attr("hidden", false);
                 // loadPseudocode("bubblesort",0);
             });
 
@@ -171,6 +169,7 @@
                 selectedSort = 2;
                 loadTitle("Insertion Sort");
                 refreshData();
+                $("#startSorting").attr("hidden", false);
                 // loadPseudocode("insertionsort",0);
             });
 
@@ -179,6 +178,7 @@
                 selectedSort = 3;
                 loadTitle("Selection Sort");
                 refreshData();
+                $("#startSorting").attr("hidden", false);
             });
 
             $("#mergeSort").click(function(){
@@ -186,6 +186,7 @@
                 selectedSort = 4;
                 loadTitle("Merge Sort");
                 refreshData();
+                $("#startSorting").attr("hidden", false);
             });
 
             $("#quickSort").click(function(){
@@ -193,6 +194,7 @@
                 selectedSort = 5;
                 loadTitle("Quick Sort");
                 refreshData();
+                $("#startSorting").attr("hidden", false);
             });
             
             //Bubble sort function
