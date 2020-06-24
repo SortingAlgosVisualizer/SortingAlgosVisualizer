@@ -10,12 +10,12 @@ var yAdjust = 300;
 
 //Define colors
 var colors = {
-    "selected": "yellow",
-    "compare" : "red",
-    "lower": "green",
-    "higher": "purple",
-    "finished": "orange",
-    "default": "gray",
+    "selected": "#f9c74f",
+    "compare" : "#f94144",
+    "lower": "#90be6d",
+    "higher": "#6930c3",
+    "finished": "#f3722c",
+    "default": "#577590",
     "black": "black",
     "white": "white"
 };
@@ -40,6 +40,8 @@ function initialBars(data){
 
     barChart.append("text")
     .attr("x",(barWidth-barPadding)/2)
+    .attr("y", "-10")
+    .attr("class", "barValue")
     .attr("text-anchor", "middle")
     .style("fill",colors["black"])
     .text(function(d) {return d;});
