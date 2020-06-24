@@ -17,72 +17,88 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarText">
             <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-                <a class="nav-link" href="#" id="bubbleSort">
-                    <svg class="bi bi-circle" width="1em" height="1em" viewBox="0 0 16 16" fill="white" xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-                    </svg>
-                    Bubble
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#" id="insertionSort">
-                    <svg class="bi bi-box-arrow-in-down" width="1em" height="1em" viewBox="0 0 16 16" fill="white" xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd" d="M4.646 8.146a.5.5 0 0 1 .708 0L8 10.793l2.646-2.647a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 0 1 0-.708z"/>
-                        <path fill-rule="evenodd" d="M8 1a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-1 0v-9A.5.5 0 0 1 8 1z"/>
-                        <path fill-rule="evenodd" d="M1.5 13.5A1.5 1.5 0 0 0 3 15h10a1.5 1.5 0 0 0 1.5-1.5v-8A1.5 1.5 0 0 0 13 4h-1.5a.5.5 0 0 0 0 1H13a.5.5 0 0 1 .5.5v8a.5.5 0 0 1-.5.5H3a.5.5 0 0 1-.5-.5v-8A.5.5 0 0 1 3 5h1.5a.5.5 0 0 0 0-1H3a1.5 1.5 0 0 0-1.5 1.5v8z"/>
-                    </svg>
-                    Insertion
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#" id="mergeSort">
-                    <svg class="bi bi-arrows-angle-contract" width="1em" height="1em" viewBox="0 0 16 16" fill="white" xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd" d="M9.5 2.036a.5.5 0 0 1 .5.5v3.5h3.5a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5v-4a.5.5 0 0 1 .5-.5z"/>
-                        <path fill-rule="evenodd" d="M14.354 1.646a.5.5 0 0 1 0 .708l-4.5 4.5a.5.5 0 1 1-.708-.708l4.5-4.5a.5.5 0 0 1 .708 0zm-7.5 7.5a.5.5 0 0 1 0 .708l-4.5 4.5a.5.5 0 0 1-.708-.708l4.5-4.5a.5.5 0 0 1 .708 0z"/>
-                        <path fill-rule="evenodd" d="M2.036 9.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-1 0V10h-3.5a.5.5 0 0 1-.5-.5z"/>
-                    </svg>
-                    Merge
-                </a>
-            </li>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#" id="quickSort">
-                    <svg class="bi bi-lightning" width="1em" height="1em" viewBox="0 0 16 16" fill="white" xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd" d="M11.251.068a.5.5 0 0 1 .227.58L9.677 6.5H13a.5.5 0 0 1 .364.843l-8 8.5a.5.5 0 0 1-.842-.49L6.323 9.5H3a.5.5 0 0 1-.364-.843l8-8.5a.5.5 0 0 1 .615-.09zM4.157 8.5H7a.5.5 0 0 1 .478.647L6.11 13.59l5.732-6.09H9a.5.5 0 0 1-.478-.647L9.89 2.41 4.157 8.5z"/>
-                    </svg>
-                    Quick
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#" id="selectionSort">
-                    <svg class="bi bi-cursor" width="1em" height="1em" viewBox="0 0 16 16" fill="white" xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd" d="M14.082 2.182a.5.5 0 0 1 .103.557L8.528 15.467a.5.5 0 0 1-.917-.007L5.57 10.694.803 8.652a.5.5 0 0 1-.006-.916l12.728-5.657a.5.5 0 0 1 .556.103zM2.25 8.184l3.897 1.67a.5.5 0 0 1 .262.263l1.67 3.897L12.743 3.52 2.25 8.184z"/>
-                    </svg>
-                    Selection
-                </a>
-            </li>
-            <li class="nav-item nav-link">
-                Color Theme:
-            </li>
-            <li class="nav-item">
-                    <select class="custom-select col" name="colorTheme" id="colorTheme">
-                        <option value="default">Default</option>
-                        <option value="colorblind">Color Blind</option>
-                    </select>
-            </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="#" id="bubbleSort">
+                        <svg class="bi bi-circle" width="1em" height="1em" viewBox="0 0 16 16" fill="white" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                        </svg>
+                        Bubble
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" id="insertionSort">
+                        <svg class="bi bi-box-arrow-in-down" width="1em" height="1em" viewBox="0 0 16 16" fill="white" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M4.646 8.146a.5.5 0 0 1 .708 0L8 10.793l2.646-2.647a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 0 1 0-.708z"/>
+                            <path fill-rule="evenodd" d="M8 1a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-1 0v-9A.5.5 0 0 1 8 1z"/>
+                            <path fill-rule="evenodd" d="M1.5 13.5A1.5 1.5 0 0 0 3 15h10a1.5 1.5 0 0 0 1.5-1.5v-8A1.5 1.5 0 0 0 13 4h-1.5a.5.5 0 0 0 0 1H13a.5.5 0 0 1 .5.5v8a.5.5 0 0 1-.5.5H3a.5.5 0 0 1-.5-.5v-8A.5.5 0 0 1 3 5h1.5a.5.5 0 0 0 0-1H3a1.5 1.5 0 0 0-1.5 1.5v8z"/>
+                        </svg>
+                        Insertion
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" id="selectionSort">
+                        <svg class="bi bi-cursor" width="1em" height="1em" viewBox="0 0 16 16" fill="white" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M14.082 2.182a.5.5 0 0 1 .103.557L8.528 15.467a.5.5 0 0 1-.917-.007L5.57 10.694.803 8.652a.5.5 0 0 1-.006-.916l12.728-5.657a.5.5 0 0 1 .556.103zM2.25 8.184l3.897 1.67a.5.5 0 0 1 .262.263l1.67 3.897L12.743 3.52 2.25 8.184z"/>
+                        </svg>
+                        Selection
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" id="mergeSort">
+                        <svg class="bi bi-arrows-angle-contract" width="1em" height="1em" viewBox="0 0 16 16" fill="white" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M9.5 2.036a.5.5 0 0 1 .5.5v3.5h3.5a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5v-4a.5.5 0 0 1 .5-.5z"/>
+                            <path fill-rule="evenodd" d="M14.354 1.646a.5.5 0 0 1 0 .708l-4.5 4.5a.5.5 0 1 1-.708-.708l4.5-4.5a.5.5 0 0 1 .708 0zm-7.5 7.5a.5.5 0 0 1 0 .708l-4.5 4.5a.5.5 0 0 1-.708-.708l4.5-4.5a.5.5 0 0 1 .708 0z"/>
+                            <path fill-rule="evenodd" d="M2.036 9.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-1 0V10h-3.5a.5.5 0 0 1-.5-.5z"/>
+                        </svg>
+                        Merge
+                    </a>
+                </li>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" id="quickSort">
+                        <svg class="bi bi-lightning" width="1em" height="1em" viewBox="0 0 16 16" fill="white" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M11.251.068a.5.5 0 0 1 .227.58L9.677 6.5H13a.5.5 0 0 1 .364.843l-8 8.5a.5.5 0 0 1-.842-.49L6.323 9.5H3a.5.5 0 0 1-.364-.843l8-8.5a.5.5 0 0 1 .615-.09zM4.157 8.5H7a.5.5 0 0 1 .478.647L6.11 13.59l5.732-6.09H9a.5.5 0 0 1-.478-.647L9.89 2.41 4.157 8.5z"/>
+                        </svg>
+                        Quick
+                    </a>
+                </li>
+                <li class="nav-item nav-link">
+                    Color Theme:
+                </li>
+                <li class="nav-item">
+                        <select class="custom-select col" name="colorTheme" id="colorTheme">
+                            <option value="default">Default</option>
+                            <option value="colorblind">Color Blind</option>
+                        </select>
+                </li>
             </ul>
             <span class="navbar-text">
-            <a href="#" id="reset">
-                <svg class="bi bi-bootstrap-reboot" width="1em" height="1em" viewBox="0 0 16 16" fill="white" xmlns="http://www.w3.org/2000/svg">
-                    <path fill-rule="evenodd" d="M1.161 8a6.84 6.84 0 1 0 6.842-6.84.58.58 0 0 1 0-1.16 8 8 0 1 1-6.556 3.412l-.663-.577a.58.58 0 0 1 .227-.997l2.52-.69a.58.58 0 0 1 .728.633l-.332 2.592a.58.58 0 0 1-.956.364l-.643-.56A6.812 6.812 0 0 0 1.16 8zm5.48-.079V5.277h1.57c.881 0 1.416.499 1.416 1.32 0 .84-.504 1.324-1.386 1.324h-1.6zm0 3.75V8.843h1.57l1.498 2.828h1.314L9.377 8.665c.897-.3 1.427-1.106 1.427-2.1 0-1.37-.943-2.246-2.456-2.246H5.5v7.352h1.141z"/>
-                </svg>
-                Reset
-            </a>
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" id="startSorting" hidden="true">Start Sorting!</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" id="reset">
+                            <svg class="bi bi-bootstrap-reboot" width="1em" height="1em" viewBox="0 0 16 16" fill="white" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" d="M1.161 8a6.84 6.84 0 1 0 6.842-6.84.58.58 0 0 1 0-1.16 8 8 0 1 1-6.556 3.412l-.663-.577a.58.58 0 0 1 .227-.997l2.52-.69a.58.58 0 0 1 .728.633l-.332 2.592a.58.58 0 0 1-.956.364l-.643-.56A6.812 6.812 0 0 0 1.16 8zm5.48-.079V5.277h1.57c.881 0 1.416.499 1.416 1.32 0 .84-.504 1.324-1.386 1.324h-1.6zm0 3.75V8.843h1.57l1.498 2.828h1.314L9.377 8.665c.897-.3 1.427-1.106 1.427-2.1 0-1.37-.943-2.246-2.456-2.246H5.5v7.352h1.141z"/>
+                            </svg>
+                            Reset
+                        </a>
+                    </li>
+                </ul>
             </span>
         </div>
         </nav>
         <div class="container">
+
+            <div class="d-flex my-4 slider">
+                <span class="">Slower</span>
+                <div class="">
+                  <input type="range" class="custom-range" id="speed" min="40" max="300" value="190">
+                </div>
+                <span class="">Faster</span>
+            </div>
+
             <div class="row">
                 <div class="col text-center">
                     <div class="title"><span class="title-p"></span></div>        
@@ -111,60 +127,116 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
         <script src="https://d3js.org/d3.v5.min.js"></script>
-        <!-- <script src="BaseFunctions2.js"></script> -->
         <script src="AllBaseFunctions.js"></script>
         <script>
+
+            //Initialize the transition duration
+            var transitionDuration = 150;
+            //Initialize time to wait between animations in ms
+            var sleepTime = 3*transitionDuration;
+
             //Define the main container size
             var svgWidth = 1000;
             var svgHeight = 600;
             //Define initial data
-            var originalData = [33, 62, 44, 14, 80, 100, 56, 120, 180, 30, 40, 120, 10, 10, 10];
+            var originalData = randomArray(15,150);
             //Define display padding and width of bars
             var barPadding = 5;  
             var barWidth = Math.floor((svgWidth - barPadding) / originalData.length);
-            //Define time to wait between animations in ms
-            var sleepTime= 500;
+
+            //Define a variable to indeicate which sort is selected
+            var selectedSort = 0;
+            //Define a variable to prevent double sorting bugs
+            var canSort = true;
             ////// set a flag to stop async function call when reset is triggered
             var stopSort = false;
+
             //Set the default container's size
             var svg = d3.select('.mainContainer')
-            .attr("width", svgWidth)
-            .attr("height", svgHeight)
-            .attr("class", "bar-chart");
+                .attr("width", svgWidth)
+                .attr("height", svgHeight)
+                .attr("class", "bar-chart");
+
             //Show initial data shuffled
             initialBars(shuffle(originalData));
 
+            function refreshData(){
+                if(!canSort){
+                    // loadPseudocode("bubblesort",-1);
+                    var currentchart = svg.selectAll("g").remove();
+                    originalData = randomArray(15,150);
+                    initialBars(originalData);
+                    canSort = true;
+                }
+            }
+
             //Set on click listeners
-            $("#bubbleSort").click(function(){
-                stopSort = true;
-                bubbleSort(originalData);
+            $("#speed").change(function(){
+                transitionDuration = 340-this.value;
+                sleepTime = 3*transitionDuration;
+                console.log(transitionDuration);
             });
+
             $("#reset").click(function(){
                 stopSort = true;
-                loadPseudocode("bubblesort",-1);
-                loadTitle("reset");
-                var currentchart = svg.selectAll("g").remove();
-                originalData = randomArray(15,150);
-                initialBars(originalData);
-
+                refreshData();
             });
+
+
+
+            $("#startSorting").click(function(){
+                console.log(transitionDuration);
+                if(canSort){
+                    stopSort = true;
+                    if(selectedSort == 1) bubbleSort(originalData);
+                    else if(selectedSort == 2) insertionSort(originalData);
+                    else if(selectedSort == 3) selectionSort(originalData);
+                    else if(selectedSort == 4) bottomUpMergeSort(originalData);
+                    else if(selectedSort == 5) quickSort(originalData, 0, originalData.length-1);
+                }
+                canSort = false;
+            });
+
+            $("#bubbleSort").click(function(){
+                stopSort = true;
+                selectedSort = 1;
+                loadTitle("Bubble Sort");
+                refreshData();
+                $("#startSorting").attr("hidden", false);
+                // loadPseudocode("bubblesort",0);
+            });
+
             $("#insertionSort").click(function(){
                 stopSort = true;
-                insertionSort(originalData);
+                selectedSort = 2;
+                loadTitle("Insertion Sort");
+                refreshData();
+                $("#startSorting").attr("hidden", false);
+                // loadPseudocode("insertionsort",0);
             });
+
             $("#selectionSort").click(function(){
                 stopSort = true;
-                selectionSort(originalData);
+                selectedSort = 3;
+                loadTitle("Selection Sort");
+                refreshData();
+                $("#startSorting").attr("hidden", false);
             });
 
             $("#mergeSort").click(function(){
                 stopSort = true;
-                bottomUpMergeSort(originalData);
+                selectedSort = 4;
+                loadTitle("Merge Sort");
+                refreshData();
+                $("#startSorting").attr("hidden", false);
             });
 
             $("#quickSort").click(function(){
                 stopSort = true;
-                quickSort(originalData, 0, originalData.length-1);
+                selectedSort = 5;
+                loadTitle("Quick Sort");
+                refreshData();
+                $("#startSorting").attr("hidden", false);
             });
             
             //Bubble sort function
@@ -178,7 +250,7 @@
                     if (stopSort) return;
                     loadPseudocode("bubblesort",2)
                     switched=false;
-                    await sleep(sleepTime+1500);
+                    await sleep(sleepTime*4);
                     if (stopSort) return;
                     for (var i = 1; i < endsort; i++) {
                         loadPseudocode("bubblesort",3)
@@ -194,7 +266,7 @@
                             switched = true;
                             swapPosition(i,i-1)
                             if (stopSort) return;
-                            await sleep(sleepTime-100);
+                            await sleep(sleepTime*0.8);
                             if (stopSort) return;
                         }
                         changeColor(i,"default");
@@ -204,13 +276,13 @@
                     changeColor(endsort-1,"finished");
                     loadPseudocode("bubblesort",4);
                     if (stopSort) return;
-                    await sleep(sleepTime+1000);
+                    await sleep(sleepTime*3);
                     if (stopSort) return;
                     endsort--;
                 }
                 loadPseudocode("bubblesort",1);
                 if (stopSort) return;
-                await sleep(sleepTime+2000);
+                await sleep(sleepTime*5);
                 if (stopSort) return;
                 loadPseudocode("bubblesort",-1);
                 // finishBarColor(-1);
@@ -223,11 +295,10 @@
                 stopSort = false;
                 loadTitle("Insertion Sort");
                 var tempData = data;
-                var time = 1000;
                 loadPseudocode("insertionsort",0)
                 loadPseudocode("insertionsort",2)
                 if (stopSort) return;
-                await sleep(time+500);
+                await sleep(sleepTime*2);
                 if (stopSort) return;
                 for(var i = 1; i < data.length; i++){
                     var current = data[i];
@@ -236,20 +307,20 @@
                     moveDown(moving);
                     changeColor(moving, "compare");
                     if (stopSort) return;
-                    await sleep(time+800);
+                    await sleep(sleepTime*3);
                     if (stopSort) return;
                     var j = i-1;
                     while((j >= 0) && (current < data[j])){
                         if (stopSort) return;
                         loadPseudocode("insertionsort",4)
                         changeColor(j, "selected");
-                        await sleep(time);
+                        await sleep(sleepTime);
                         if (stopSort) return;
                         moveRight(j);
                         changeColor(j, "finished");
                         moveLeft(moving);
                         if (stopSort) return;
-                        await sleep(time);
+                        await sleep(sleepTime);
                         if (stopSort) return;
                         data[j+1] = data[j];
                         swapPositionID(j+1, j);
@@ -261,7 +332,7 @@
                     if(j >= 0){
                         if (stopSort) return;
                         changeColor(j, "selected");
-                        await sleep(time);
+                        await sleep(sleepTime);
                         if (stopSort) return;
                         changeColor(j, "finished");
                     } 
@@ -272,7 +343,7 @@
                 }
                 loadPseudocode("insertionsort",1);
                 if (stopSort) return;
-                await sleep(sleepTime+1500);
+                await sleep(sleepTime*4);
                 if (stopSort) return;
                 loadPseudocode("insertionsort",-1);
             }
@@ -288,7 +359,7 @@
                     let minPosition = i;
                     changeColor(i,"default");
                     loadPseudocode("selectsort",2);
-                    await sleep(sleepTime+1000);
+                    await sleep(sleepTime*3);
                     if (stopSort) return;
                     for (var j = i+1;j<endLoop;j++) {
                         if (stopSort) return;
@@ -312,12 +383,12 @@
                     changeColor(i,"higher");
                     loadPseudocode("selectsort",4);
                     if (stopSort) return;
-                    await sleep(sleepTime+1000);
+                    await sleep(sleepTime*3);
                     if (stopSort) return;
                     if (minPosition != i) {
                         swapPosition(i,minPosition);
                         if (stopSort) return;
-                        await sleep(sleepTime+1500);
+                        await sleep(sleepTime*4);
                         if (stopSort) return;
                         changeColor(minPosition,"default")
                     }
@@ -327,7 +398,7 @@
                 }
                 loadPseudocode("selectsort",1);
                 if (stopSort) return;
-                await sleep(sleepTime+2000);
+                await sleep(sleepTime*5);
                 if (stopSort) return;
                 loadPseudocode("selectsort",-1);
                 // finishBarColor(-1);
@@ -410,12 +481,11 @@
             var finished = createZeroArray(originalData.length);
             async function quickSortPartition(data, first, last){
                 if(stopSort) return;
-                var sleepTime = 500;
                 //Set last value in array as the pivot value
                 loadPseudocode("quicksort",2);
                 var pivot = data[last];
                 changeColor(last, "compare");
-                await sleep(sleepTime+1000);
+                await sleep(sleepTime*3);
                 if(stopSort) return;
                 //Keep track of the next value that is larger than the pivot
                 var i = first;
@@ -449,7 +519,7 @@
                 }
                 //Swap pivot with the next value that is larger than the pivot
                 loadPseudocode("quicksort",4);
-                await sleep(sleepTime+500);
+                await sleep(sleepTime*2);
                 if(stopSort) return;
                 var temp = data[i];
                 data[i] = data[last];
@@ -483,7 +553,6 @@
                 var finished = createZeroArray(data.length);
                 loadTitle("Quick Sort");
                 loadPseudocode("quicksort",0)
-                var sleepTime = 500;
                 //Create an array to use as a stack and keep track of all of the partitions we have
                 var stack = [];
                 //Add first and last index to the stack
@@ -510,7 +579,7 @@
                 }
                 loadPseudocode("quicksort",1);
                 if(stopSort) return;
-                await sleep(sleepTime+1500);
+                await sleep(sleepTime*4);
 
                 //Change all to orange
                 changeColor(-1, "finished");
