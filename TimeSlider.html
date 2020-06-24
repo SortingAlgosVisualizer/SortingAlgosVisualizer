@@ -1,0 +1,616 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <title>Sorting</title>
+        <!-- Required meta tags -->
+        <meta charset="ISO-8859-1">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link rel="stylesheet" href="style2.css">
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-custom">
+            <a class="navbar-brand" href="#">Sort:</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarText">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#" id="bubbleSort">Bubble</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" id="insertionSort">Insertion</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" id="selectionSort">Selection</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" id="mergeSort">Merge</a>
+                </li>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" id="quickSort">Quick</a>
+                </li>
+            </ul>
+            <span class="navbar-text">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" id="startSorting">Start Sorting!</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" id="reset">Reset</a>
+                    </li>
+                </ul>
+            </span>
+        </div>
+        </nav>
+        <div class="container">
+
+            <!-- <div class="slidecontainer row">
+                <input type="range" min="50" max="400" value="100" class="slider" id="speed">
+                <p>Value: <span id="demo"></span></p>
+            </div> -->
+
+            <div class="row">
+                <div class="col text-center">
+                    <div class="title"><span class="title-p"></span></div>        
+                    <svg></svg>
+                </div>
+            </div>
+            <div class="row padding"></div>
+            <div class="row pseudocode">
+                <div class="col text-center">
+                    <div class="row">
+                        <div class="col-4"></div>
+                        <div class="col-4 text-left code2"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-4"></div>
+                        <div class="col-4 text-center code1">
+                            <p class="lineval"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>            
+        </div>
+        <!-- Optional JavaScript -->
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        <script src="https://d3js.org/d3.v5.min.js"></script>
+        <!-- <script src="BaseFunctions2.js"></script> -->
+        <script src="AllBaseFunctions.js"></script>
+        <script>
+
+
+            //tried to impliment a slider to control speed, could not get it to update the proper value
+            // var transitionDuration = 100;
+            // var sleepTime = 3*transitionDuration;
+            // //SpeedSlider
+            // var slider = document.getElementById("speed");
+            // var output = document.getElementById("demo");
+            // output.innerHTML = slider.value;
+
+            // slider.oninput = function() {
+            //     output.innerHTML = this.value;
+            //     transitionDuration = this.value;
+            // }
+
+            //Define the main container size
+            var svgWidth = 1000;
+            var svgHeight = 600;
+            //Define initial data
+            var originalData = randomArray(15,150);
+            //Define display padding and width of bars
+            var barPadding = 5;  
+            var barWidth = Math.floor((svgWidth - barPadding) / originalData.length);
+
+            //Define a variable to indeicate which sort is selected
+            var selectedSort = 0;
+
+            //Define a variable to prevent double sorting bugs
+            var canSort = true;
+
+            ////// set a flag to stop async function call when reset is triggered
+            var stopSort = false;
+            //Set the default container's size
+            var svg = d3.select('svg')
+            .attr("width", svgWidth)
+            .attr("height", svgHeight)
+            .attr("class", "bar-chart");
+            //Show initial data shuffled
+            initialBars(shuffle(originalData));
+
+            //Set on click listeners
+            
+            function refreshData(){
+                if(!canSort){
+                    // loadPseudocode("bubblesort",-1);
+                    var currentchart = svg.selectAll("g").remove();
+                    originalData = randomArray(15,150);
+                    initialBars(originalData);
+                    canSort = true;
+                }
+            }
+
+            $("#reset").click(function(){
+                stopSort = true;
+                refreshData();
+            });
+
+            $("#startSorting").click(function(){
+                if(canSort){
+                    stopSort = true;
+                    if(selectedSort == 1) bubbleSort(originalData);
+                    else if(selectedSort == 2) insertionSort(originalData);
+                    else if(selectedSort == 3) selectionSort(originalData);
+                    else if(selectedSort == 4) bottomUpMergeSort(originalData);
+                    else if(selectedSort == 5) quickSort(originalData, 0, originalData.length-1);
+                }
+                canSort = false;
+            });
+
+            $("#bubbleSort").click(function(){
+                stopSort = true;
+                selectedSort = 1;
+                loadTitle("Bubble Sort");
+                refreshData();
+                // loadPseudocode("bubblesort",0);
+            });
+
+            $("#insertionSort").click(function(){
+                stopSort = true;
+                selectedSort = 2;
+                loadTitle("Insertion Sort");
+                refreshData();
+                // loadPseudocode("insertionsort",0);
+            });
+
+            $("#selectionSort").click(function(){
+                stopSort = true;
+                selectedSort = 3;
+                loadTitle("Selection Sort");
+                refreshData();
+            });
+
+            $("#mergeSort").click(function(){
+                stopSort = true;
+                selectedSort = 4;
+                loadTitle("Merge Sort");
+                refreshData();
+            });
+
+            $("#quickSort").click(function(){
+                stopSort = true;
+                selectedSort = 5;
+                loadTitle("Quick Sort");
+                refreshData();
+            });
+            
+            //Bubble sort function
+            async function bubbleSort(dataset){
+                stopSort = false;
+                loadTitle("Bubble Sort");
+                let endsort = dataset.length;
+                let switched = true;
+                loadPseudocode("bubblesort",0);
+                while (switched) {
+                    if (stopSort) return;
+                    loadPseudocode("bubblesort",2);
+                    switched=false;
+                    await sleep(sleepTime*4);
+                    if (stopSort) return;
+                    for (var i = 1; i < endsort; i++) {
+                        loadPseudocode("bubblesort",3)
+                        if (stopSort) return;
+                        changeColor(i,"selected");
+                        changeColor(i-1,"selected");
+                        await sleep(sleepTime);
+                        if (stopSort) return;
+                        let vRight = parseInt(findElement(i).select("text").text());
+                        let vLeft = parseInt(findElement(i-1).select("text").text());
+
+                        if (vLeft > vRight) {
+                            switched = true;
+                            swapPosition(i,i-1)
+                            if (stopSort) return;
+                            await sleep(sleepTime*0.8);
+                            if (stopSort) return;
+                        }
+                        changeColor(i,"default");
+                        changeColor(i-1,"default");
+                    }
+                    // finishBarColor(endsort);
+                    changeColor(endsort-1,"finished");
+                    loadPseudocode("bubblesort",4);
+                    if (stopSort) return;
+                    await sleep(sleepTime*3);
+                    if (stopSort) return;
+                    endsort--;
+                }
+                loadPseudocode("bubblesort",1);
+                if (stopSort) return;
+                await sleep(sleepTime*5);
+                if (stopSort) return;
+                loadPseudocode("bubblesort",-1);
+                // finishBarColor(-1);
+                changeColor(-1,"black");
+
+            }
+
+            //Insertion Sort function
+            async function insertionSort(data){
+                stopSort = false;
+                loadTitle("Insertion Sort");
+                var tempData = data;
+                loadPseudocode("insertionsort",0);
+                loadPseudocode("insertionsort",2);
+                if (stopSort) return;
+                await sleep(sleepTime*2);
+                if (stopSort) return;
+                for(var i = 1; i < data.length; i++){
+                    var current = data[i];
+                    var moving = i;
+                    loadPseudocode("insertionsort",3)
+                    moveDown(moving);
+                    changeColor(moving, "compare");
+                    if (stopSort) return;
+                    await sleep(sleepTime*3);
+                    if (stopSort) return;
+                    var j = i-1;
+                    while((j >= 0) && (current < data[j])){
+                        if (stopSort) return;
+                        loadPseudocode("insertionsort",4)
+                        changeColor(j, "selected");
+                        await sleep(sleepTime);
+                        if (stopSort) return;
+                        moveRight(j);
+                        changeColor(j, "finished");
+                        moveLeft(moving);
+                        if (stopSort) return;
+                        await sleep(sleepTime);
+                        if (stopSort) return;
+                        data[j+1] = data[j];
+                        swapPositionID(j+1, j);
+                        j--;
+                        moving--;
+                    }
+                    //Make sure j is not negative or else all elements will change color
+                    if (stopSort) return;
+                    if(j >= 0){
+                        if (stopSort) return;
+                        changeColor(j, "selected");
+                        await sleep(sleepTime);
+                        if (stopSort) return;
+                        changeColor(j, "finished");
+                    } 
+                    if (stopSort) return;
+                    moveUp(j+1);
+                    changeColor(j+1, "finished");
+                    data[j+1] = current;
+                }
+                loadPseudocode("insertionsort",1);
+                if (stopSort) return;
+                await sleep(sleepTime*4);
+                if (stopSort) return;
+                loadPseudocode("insertionsort",-1);
+            }
+
+            //Selection sort function
+            async function selectionSort(dataset){
+                stopSort = false;
+                loadTitle("Selection Sort");
+                let endLoop = dataset.length;
+                loadPseudocode("selectsort",0)
+                for (var i = 0; i<endLoop-1;i++) {
+                    if (stopSort) return;
+                    let minPosition = i;
+                    changeColor(i,"default");
+                    loadPseudocode("selectsort",2);
+                    await sleep(sleepTime*3);
+                    if (stopSort) return;
+                    for (var j = i+1;j<endLoop;j++) {
+                        if (stopSort) return;
+                        changeColor(j,"selected");
+                        loadPseudocode("selectsort",3);
+                        await sleep(sleepTime);
+                        if (stopSort) return;
+                        let lookupVal = parseInt(findElement(j).select("text").text());
+                        let minVal = parseInt(findElement(minPosition).select("text").text());
+                        if (lookupVal < minVal) {
+                            
+                            changeColor(j,"lower");
+                            changeColor(minPosition,"default");
+                            changeColor(i,"default")
+                            minPosition = j;
+                        } else {
+                            changeColor(j,"default");
+                        }
+
+                    }
+                    changeColor(i,"higher");
+                    loadPseudocode("selectsort",4);
+                    if (stopSort) return;
+                    await sleep(sleepTime*3);
+                    if (stopSort) return;
+                    if (minPosition != i) {
+                        swapPosition(i,minPosition);
+                        if (stopSort) return;
+                        await sleep(sleepTime*4);
+                        if (stopSort) return;
+                        changeColor(minPosition,"default")
+                    }
+                    
+                    if (stopSort) return;
+                    changeColor(i,"finished");
+                }
+                loadPseudocode("selectsort",1);
+                if (stopSort) return;
+                await sleep(sleepTime*5);
+                if (stopSort) return;
+                loadPseudocode("selectsort",-1);
+                // finishBarColor(-1);
+                changeColor(-1,"lower");
+
+            }
+
+            // Merge sort function
+            function bottomUpMergeSort(dataset) {
+                stopSort = false;
+                loadTitle("Merge Sort");
+                loadPseudocode("mergesort",0)
+                let array = dataset.map(function(data) { return data; });
+                bottomUpSort(array, array.length);
+                return array;
+            }
+            
+            async function bottomUpSort(dataset, n) {
+                var width,
+                    i;
+                for(width=1; width<n; width=width*2) {
+                    refreshPositionIds(dataset);
+                    for(i=0; i<n; i=i+2*width) {
+                        if(stopSort) return;
+                        loadPseudocode("mergesort",2);
+                        await sleep(sleepTime);
+                        let left = i;
+                        let right = Math.min(i+width, n);
+                        let end = Math.min(i+2*width, n);
+                        for(let j=left; j<end; j++){
+                            if(stopSort) return;
+                            if(j<right) changeColor(j,"lower");
+                            else changeColor(j,"higher");                            
+                            move(j,0,-1);
+                            await sleep(sleepTime);
+                        }
+                        loadPseudocode("mergesort",3)
+                        bottomUpMerge(dataset, left, right, end);
+                        
+                        await sleep(sleepTime*2*width);
+                        
+                    }
+                    loadPseudocode("mergesort",4)
+                    await sleep(sleepTime*4);
+                }
+                loadPseudocode("mergesort",1);
+                await sleep(sleepTime*4);
+                loadPseudocode("mergesort",-1)
+            }
+
+            async function bottomUpMerge(dataset, left, right, end) {
+                var n = left,
+                    m = right,
+                    currentSort = [],
+                    j,k;
+                
+                for(j=left; j<end; j++) {
+                    if(stopSort) return;
+                    if(n<right && (m>=end || dataset[n]<dataset[m])) {
+                        currentSort.push(dataset[n]);
+                        changeColor(n,'default');
+                        move(n, j-n, 1);
+                        await sleep(sleepTime);
+                        n++;
+                    }
+                    else{
+                        currentSort.push(dataset[m]);
+                        changeColor(m,'default');
+                        move(m, -1*(m-j), 1);
+                        await sleep(sleepTime);
+                        m++;
+                    }
+                }
+                
+                currentSort.map(function(data,i) { dataset[left + i] = data; });
+            }
+
+            //Quick sort
+            //Used to track sorted elements
+            var finished = createZeroArray(originalData.length);
+            async function quickSortPartition(data, first, last){
+                if(stopSort) return;
+                loadPseudocode("quicksort",2);
+                //Set last value in array as the pivot value
+                var pivot = data[last];
+                changeColor(last, "compare");
+                await sleep(sleepTime*3);
+                if(stopSort) return;
+                //Keep track of the next value that is larger than the pivot
+                var i = first;
+                loadPseudocode("quicksort",3);
+                //Loop through all values to move all values smaller than pivot to left side of pivot and all values greater to the right
+                for(var j = first; j < last; j++){
+                    if(stopSort) return;
+                    //Change color of bar we are looking at
+                    changeColor(j, "selected");
+                    if(stopSort) return;
+                    await sleep(sleepTime);
+                    if(data[j] <= pivot){
+                        if(stopSort) return;
+                        changeColor(j, "lower");
+                        await sleep(sleepTime);
+                        var temp = data[j];
+                        data[j] = data[i];
+                        data[i] = temp;
+                        if(stopSort) return;
+                        //Only swap if there is something to swap
+                        if(i != j){
+                            await swapPosition(i, j);
+                            await sleep(sleepTime);
+                        }
+                        i++;
+                    }else{
+                        if(stopSort) return;
+                        changeColor(j, "higher");
+                        await sleep(sleepTime);
+                    }
+                }
+                //Swap pivot with the next value that is larger than the pivot
+                loadPseudocode("quicksort",4);
+                await sleep(sleepTime*2);
+                if(stopSort) return;
+                var temp = data[i];
+                data[i] = data[last];
+                data[last] = temp;
+                if(stopSort) return;
+                await swapPosition(i, last);
+                //set pivot to different color to show it is in final position
+                changeColor(i, "finished");
+                finished[i] = 1;
+                if(stopSort) return;
+                await sleep(sleepTime);
+                //Reset the position IDs
+                if(stopSort) return;
+                await refreshPositionIds(data);
+                //set all finished back to orange;
+                if(stopSort) return;
+                for(var index = 0; index < finished.length; index++){
+                    if(stopSort) return;
+                    if(finished[index] == 1){
+                        changeColor(index, "finished");
+                    } else{
+                        changeColor(index, "default");
+                    }
+                }
+                //Return where the new pivot will be
+                return i;
+            }
+
+            async function quickSort(data, first, last){
+                stopSort = false;
+                var finished = createZeroArray(data.length);
+                loadTitle("Quick Sort");
+                loadPseudocode("quicksort",0)
+                //Create an array to use as a stack and keep track of all of the partitions we have
+                var stack = [];
+                //Add first and last index to the stack
+                stack.push(first);
+                stack.push(last);
+                //While the stack still has elements
+                if(stopSort) return;
+                while(stack.length > 0){
+                    //Partition the data
+                    last = stack.pop();
+                    first = stack.pop();
+                    if(stopSort) return;
+                    var pivot = await this.quickSortPartition(data, first, last);
+                    //Push the new partition to the stack
+                    if(pivot - 1 > first){
+                        stack.push(first);
+                        stack.push(pivot-1);
+                    }
+                    if(pivot+1 < last){
+                        stack.push(pivot +1);
+                        stack.push(last);
+                    }
+                    if(stopSort) return;
+                }
+                loadPseudocode("quicksort",1);
+                if(stopSort) return;
+                await sleep(sleepTime*4);
+
+                //Change all to orange
+                changeColor(-1, "finished");
+                loadPseudocode("quicksort",-1);
+            }
+
+            function loadPseudocode(sortType, num) {
+                ////// highlight appropriate line in pseudocode and show explanation for currently highlighted line
+                
+                var codeDict = {
+                    "bubblesort": {
+                                    "line1": ["while (switched)", "there was no swap during the entire loop, array is now sorted"],
+                                    "line2": ["   switched = false\n   for i = 1 to lastsort-1", "start each 'for' loop with switched = false, and iterate until the last unsorted position"],
+                                    "line3": ["      if left value > right value\n      swap(left value, right value)\n      switched = true","If value at (i-1) is greater than value at (i), swap the two values and set switched flag to true"],
+                                    "line4": ["   lastsort--","Last position of each 'for' loop is sorted"]
+                                    },
+                    "insertionsort": {
+                                    "line1": ["for i = 1 to data.length-1", "'for' loop is complete and list is sorted"],
+                                    "line2": ["   j = i - 1", "assign j the position to the left of i"],
+                                    "line3": ["   while (j>=0 && data[i] < data[j]", "check if data[i] is smaller than values on the left side"],
+                                    "line4": ["      swap(i, j)\n      j--", "shift i to the left until i is sorted"]
+                                    },
+                    "mergesort": {
+                                    "line1": ["for width = 1 to data.length","'for' loop is complete and list is sorted"],
+                                    "line2": ["   for i = 1 to partition.length","partition data according to current width"],
+                                    "line3": ["      if left < right\n         load current index with left\n      else load current index with right","sort values in current partition by comparing left and right sections"],
+                                    "line4": ["   width*=2","increase width of partition by 100% (recursively merge adjoining partitions"]
+                                    },
+                    "quicksort": {
+                                    "line1": ["while (unsorted partition exists)","no unsorted partition remains and list is sorted"],
+                                    "line2": ["   pivot = partition[partition.length-1]","choose last index in current (unsorted) partition as pivot"],
+                                    "line3": ["   if partition[i] < pivot\n      swap(i, first item > pivot","move values less than pivot to the left and those greater than pivot to the right"],
+                                    "line4": ["   swap(pivot, first item > pivot)","place pivot between left and right, and pivot is now sorted"]
+                                    },
+                    "selectsort": {
+                                    "line1": ["for i = 1 to data.length - 1", "'for' loop is complete and list is sorted"],
+                                    "line2": ["   currentMin = i\n   for j = i+1 to data.length", "given current position of i, check if there are values lower than data[i]"],
+                                    "line3": ["      if data[j] < data[currentMin]\n         currentMin = j", "if a lower value is found, assign j as the new minimum position"],
+                                    "line4": ["   if currentMin != i\n      swap(i, currentMin)","if j loop has found a new minimum, swap i and new minimum"]
+                                    }
+                }
+                ////// if num = -1, remove code and hide pseudocode div
+                if (num===-1) {
+                    d3.select(".lineval").text("");
+                    d3.select(".code2").selectAll("pre").remove();
+                    d3.select(".code2").style("border", "none");
+                    d3.select(".pseudocode").style("display","none");
+                    return;
+                }
+                let code = d3.select(".code2");
+                let lineCount = Object.keys(codeDict[sortType]).length;
+                if (isNaN(lineCount)) {
+                    return;
+                }
+
+                ////// if num = 0, load code and show div
+                if (num===0) {
+                    for (var z = 1; z<=lineCount; z++) {
+                        code.append("pre").attr("class","line" + z).text(codeDict[sortType]["line" + z][0]);
+                    }
+                    code.style("padding","10px").style("background-color","white"); 
+                    d3.select(".pseudocode").style("display","block");
+                    return;
+                }
+                if (stopSort) return;              
+                
+                ////// any other value of num (>0), highlight code and show additional text
+                for (var z = 1; z<=lineCount; z++) {
+                    let line = d3.select(".line" + z)
+                    if (z === num) {
+                        line.style("background-color","black")
+                        .style("color","white");
+                    } else {
+                        line.style("background-color","white")
+                        .style("color","black");
+                    }
+                }
+                d3.select(".lineval").text(codeDict[sortType]["line" + num][1]);
+            }
+
+        </script>
+    </body>
+</html>
