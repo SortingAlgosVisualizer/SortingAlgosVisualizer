@@ -39,10 +39,10 @@ var colors = {
 //Select color theme
 var selectedTheme = "default";
 var currentTheme = colors[selectedTheme];
-$("#colorTheme").click(function(){
+$("#colorTheme").change(function(){
     if(selectedTheme != $(this).val()){
         selectedTheme = $(this).val();
-        console.log("theme changed");
+        console.log("current theme: " + selectedTheme);
         currentTheme = colors[selectedTheme];
         console.log(originalData);
         stopSort = true;
