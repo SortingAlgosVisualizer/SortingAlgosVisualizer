@@ -151,6 +151,13 @@
             ////// set a flag to stop async function call when reset is triggered
             var stopSort = false;
 
+            //Start page at bubble sort
+            stopSort = true;
+            selectedSort = 1;
+            loadTitle("Bubble Sort");
+            refreshData();
+            $("#startSorting").attr("hidden", false);
+
             //Set the default container's size
             var svg = d3.select('.mainContainer')
                 .attr("width", svgWidth)
