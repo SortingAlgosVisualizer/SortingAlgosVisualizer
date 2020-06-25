@@ -45,7 +45,10 @@ $("#colorTheme").click(function(){
         console.log("theme changed");
         currentTheme = colors[selectedTheme];
         console.log(originalData);
+        stopSort = true;
         resetBars(originalData);
+        refreshData();
+        
     }
 });
 
