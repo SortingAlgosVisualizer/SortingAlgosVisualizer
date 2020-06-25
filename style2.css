@@ -88,3 +88,34 @@ body {
 .icon{
     vertical-align: middle;
 }
+
+
+#leftpane, #rightpane {
+    display: block;
+}
+@media (min-width: 992px) {
+    #leftpane {
+        display: inline-block;
+        width: 99%;
+    }
+    #rightpane {
+        display: inline-block;
+    }
+}
+
+#leftpane {
+    padding: 30px 0px 50px 0px;
+    vertical-align: top;
+}
+
+#rightpane {
+    padding-top: 30px;
+    align-items: center;
+}
+
+
+#selectinfo {
+    font-size: 14px;
+    padding-left: 10px;
+    font-weight: 600;
+}

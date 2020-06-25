@@ -108,20 +108,25 @@
                             <a class="btn" href="#" id="startSorting" hidden="true"><span class="icon">Start Sorting!</span></a>
                         </div>
                     </div>
-                    <svg class="mainContainer"></svg>
                 </div>
             </div>
-            <div class="row padding"></div>
-            <div class="row pseudocode">
-                <div class="col text-center">
-                    <div class="row">
-                        <div class="col-4"></div>
-                        <div class="col-4 text-left code2"></div>
+            <div id="leftpane">
+                <div class="row">
+                    <div class="col text-center">                 
+                        <svg class="mainContainer"></svg>
                     </div>
-                    <div class="row">
-                        <div class="col-4"></div>
-                        <div class="col-4 text-center code1">
-                            <p class="lineval"></p>
+                </div>
+            </div>
+            <div id="rightpane">
+                <div class="row infotext">
+                    <div class="col text-left">
+                        <ul id="selectinfo"></ul>
+                    </div>
+                </div>
+                <div class="row pseudocode">
+                    <div class="col text-center">
+                        <div class="row">
+                            <div class="col text-left code2"></div>
                         </div>
                     </div>
                 </div>
@@ -135,6 +140,10 @@
         <script src="https://d3js.org/d3.v5.min.js"></script>
         <script src="AllBaseFunctions.js"></script>
         <script>
+            // For smaller screen, collapse navbar when a link is clicked
+            $('.navbar-nav>li>a').on('click', function(){
+                $('.navbar-collapse').collapse('hide');
+            });
 
             //Initialize the transition duration
             var transitionDuration = 150;
@@ -142,8 +151,8 @@
             var sleepTime = 3*transitionDuration;
 
             //Define the main container size
-            var svgWidth = 1000;
-            var svgHeight = 600;
+            // var svgWidth = 1000;
+            // var svgHeight = 600;
             //Define initial data
             var originalData = randomArray(15,150);
             //Define display padding and width of bars
@@ -175,7 +184,9 @@
 
             function refreshData(){
                 if(!canSort){
-                    // loadPseudocode("bubblesort",-1);
+                    loadPseudocode("bubblesort",-1);
+                    closeRightPane();
+                    resetDimension();
                     var currentchart = svg.selectAll("g").remove();
                     originalData = randomArray(15,150);
                     initialBars(originalData);
@@ -201,6 +212,7 @@
                 console.log(transitionDuration);
                 if(canSort){
                     stopSort = true;
+                    openRightPane();
                     if(selectedSort == 1) bubbleSort(originalData);
                     else if(selectedSort == 2) insertionSort(originalData);
                     else if(selectedSort == 3) selectionSort(originalData);
@@ -298,6 +310,7 @@
                 await sleep(sleepTime*5);
                 if (stopSort) return;
                 loadPseudocode("bubblesort",-1);
+                closeRightPane();
                 // finishBarColor(-1);
                 changeColor(-1,"finished");
 
@@ -359,6 +372,7 @@
                 await sleep(sleepTime*4);
                 if (stopSort) return;
                 loadPseudocode("insertionsort",-1);
+                closeRightPane();
             }
 
             //Selection sort function
@@ -414,6 +428,7 @@
                 await sleep(sleepTime*5);
                 if (stopSort) return;
                 loadPseudocode("selectsort",-1);
+                closeRightPane();
                 // finishBarColor(-1);
                 changeColor(-1,"lower");
 
@@ -460,6 +475,7 @@
                 loadPseudocode("mergesort",1);
                 await sleep(sleepTime+1500);
                 loadPseudocode("mergesort",-1)
+                closeRightPane();
             }
 
             async function bottomUpMerge(dataset, left, right, end) {
@@ -491,7 +507,7 @@
 
             //Quick sort
             //Used to track sorted elements
-            var finished = createZeroArray(originalData.length);
+            var finished;
             async function quickSortPartition(data, first, last){
                 if(stopSort) return;
                 //Set last value in array as the pivot value
@@ -565,7 +581,7 @@
 
             async function quickSort(data, first, last){
                 stopSort = false;
-                var finished = createZeroArray(data.length);
+                finished = createZeroArray(data.length);
                 loadTitle("Quick Sort");
                 loadPseudocode("quicksort",0)
                 //Create an array to use as a stack and keep track of all of the partitions we have
@@ -599,6 +615,7 @@
                 //Change all to orange
                 changeColor(-1, "finished");
                 loadPseudocode("quicksort",-1);
+                closeRightPane();
             }
 
             function loadPseudocode(sortType, num) {
@@ -606,34 +623,34 @@
                 
                 var codeDict = {
                     "bubblesort": {
-                                    "line1": ["while (switched)", "there was no swap during the entire loop, array is now sorted"],
-                                    "line2": ["   switched = false\n   for i = 1 to lastsort-1", "start each 'for' loop with switched = false, and iterate until the last unsorted position"],
-                                    "line3": ["      if left value > right value\n      swap(left value, right value)\n      switched = true","If value at (i-1) is greater than value at (i), swap the two values and set switched flag to true"],
-                                    "line4": ["   lastsort--","Last position of each 'for' loop is sorted"]
+                                    "line1": ["while (switched)", "there was no swap during the entire loop, array is now sorted","Bubble sort is one of the simplest sorting algorithms to understand and implement and because of this it is usually the first sorting alogorith taught"],
+                                    "line2": ["   switched = false\n   for i = 1 to lastsort-1", "start each 'for' loop with switched = false, and iterate until the last unsorted position", "Each item in the list is compared to the item next to it and swapped if they are out of order"],
+                                    "line3": ["      if left value > right value\n      swap(left value, right value)\n      switched = true","If value at (i-1) is greater than value at (i), swap the two values and set switched flag to true", "The larger items seem to 'bubble' up to the end of the list"],
+                                    "line4": ["   lastsort--","Last position of each 'for' loop is sorted","While it is easy to understand, it is very inefficient with an average complexity of O(n^2)"]
                                     },
                     "insertionsort": {
-                                    "line1": ["for i = 1 to data.length-1", "'for' loop is complete and list is sorted"],
-                                    "line2": ["   j = i - 1", "assign j the position to the left of i"],
-                                    "line3": ["   while (j>=0 && data[i] < data[j]", "check if data[i] is smaller than values on the left side"],
-                                    "line4": ["      swap(i, j)\n      j--", "shift i to the left until i is sorted"]
+                                    "line1": ["for i = 1 to data.length-1", "'for' loop is complete and list is sorted","Insertion sort is very simple to understand and easy to implement"],
+                                    "line2": ["   j = i - 1", "assign j the position to the left of i","The comparison moves through the list and the smaller items are inserted back in proper order"],
+                                    "line3": ["   while (j>=0 && data[i] < data[j]", "check if data[i] is smaller than values on the left side","It is similar to how people generally sort a hand of cards"],
+                                    "line4": ["      swap(i, j)\n      j--", "shift i to the left until i is sorted","It is very inefficient, similar to bubble sort, with an average complexity of O(n^2)"]
                                     },
                     "mergesort": {
-                                    "line1": ["for width = 1 to data.length","'for' loop is complete and list is sorted"],
-                                    "line2": ["   for i = 1 to partition.length","partition data according to current width"],
-                                    "line3": ["      if left < right\n         load current index with left\n      else load current index with right","sort values in current partition by comparing left and right sections"],
-                                    "line4": ["   width*=2","increase width of partition by 100% (recursively merge adjoining partitions"]
+                                    "line1": ["for width = 1 to data.length","'for' loop is complete and list is sorted","Merge sort is generally implemented by recursively splitting a list into smaller lists"],
+                                    "line2": ["   for i = 1 to partition.length","partition data according to current width","The smaller lists are then shuffled back together in order"],
+                                    "line3": ["      if left < right\n         load current index with left\n      else load current index with right","sort values in current partition by comparing left and right sections","It is considered an effecient sorting algorithm and has a stable time complexity of O(n log n)"],
+                                    "line4": ["   width*=2","increase width of partition by 100% (recursively merge adjoining partitions","Invented by John von Neumann in 1945"]
                                     },
                     "quicksort": {
-                                    "line1": ["while (unsorted partition exists)","no unsorted partition remains and list is sorted"],
-                                    "line2": ["   pivot = partition[partition.length-1]","choose last index in current (unsorted) partition as pivot"],
-                                    "line3": ["   if partition[i] < pivot\n      swap(i, first item > pivot","move values less than pivot to the left and those greater than pivot to the right"],
-                                    "line4": ["   swap(pivot, first item > pivot)","place pivot between left and right, and pivot is now sorted"]
+                                    "line1": ["while (unsorted partition exists)","no unsorted partition remains and list is sorted","Quick sort works by selecting a pivot and partitioning a list into two parts, smaller and larger"],
+                                    "line2": ["   pivot = partition[partition.length-1]","choose last index in current (unsorted) partition as pivot","Each part is then sorted the same way recursively"],
+                                    "line3": ["   if partition[i] < pivot\n      swap(i, first item > pivot","move values less than pivot to the left and those greater than pivot to the right","Average time complexity O(n log n) worst case O(n^2)"],
+                                    "line4": ["   swap(pivot, first item > pivot)","place pivot between left and right, and pivot is now sorted","Invented by Tony Hoare in 1959"]
                                     },
                     "selectsort": {
-                                    "line1": ["for i = 1 to data.length - 1", "'for' loop is complete and list is sorted"],
-                                    "line2": ["   currentMin = i\n   for j = i+1 to data.length", "given current position of i, check if there are values lower than data[i]"],
-                                    "line3": ["      if data[j] < data[currentMin]\n         currentMin = j", "if a lower value is found, assign j as the new minimum position"],
-                                    "line4": ["   if currentMin != i\n      swap(i, currentMin)","if j loop has found a new minimum, swap i and new minimum"]
+                                    "line1": ["for i = 1 to data.length - 1", "'for' loop is complete and list is sorted","Selection sort works by subdividing a list into an unsorted and a sorted list"],
+                                    "line2": ["   currentMin = i\n   for j = i+1 to data.length", "given current position of i, check if there are values lower than data[i]","It then finds the smallest item in the unsorted list and swaps it with the first item in the unsorted list"],
+                                    "line3": ["      if data[j] < data[currentMin]\n         currentMin = j", "if a lower value is found, assign j as the new minimum position","This becomes the last item in the sorted list"],
+                                    "line4": ["   if currentMin != i\n      swap(i, currentMin)","if j loop has found a new minimum, swap i and new minimum","It has an average time complexity of O(n^2)"]
                                     }
                 }
                 ////// if num = -1, remove code and hide pseudocode div
@@ -642,9 +659,11 @@
                     d3.select(".code2").selectAll("pre").remove();
                     d3.select(".code2").style("border", "none");
                     d3.select(".pseudocode").style("display","none");
+                    d3.select("#selectinfo").selectAll("li").remove();
                     return;
                 }
                 let code = d3.select(".code2");
+                let info = d3.select("#selectinfo")
                 let lineCount = Object.keys(codeDict[sortType]).length;
                 if (isNaN(lineCount)) {
                     return;
@@ -654,6 +673,7 @@
                 if (num===0) {
                     for (var z = 1; z<=lineCount; z++) {
                         code.append("pre").attr("class","line" + z).text(codeDict[sortType]["line" + z][0]);
+                        info.append("li").text(codeDict[sortType]["line" + z][2])
                     }
                     code.style("padding","10px").style("background-color","white"); 
                     d3.select(".pseudocode").style("display","block");
@@ -672,7 +692,7 @@
                         .style("color","black");
                     }
                 }
-                d3.select(".lineval").text(codeDict[sortType]["line" + num][1]);
+                // d3.select(".lineval").text(codeDict[sortType]["line" + num][1]);
             }
 
         </script>
