@@ -525,7 +525,8 @@
                 data[i] = data[last];
                 data[last] = temp;
                 if(stopSort) return;
-                await swapPosition(i, last);
+                swapPosition(i, last);
+                await sleep(sleepTime*3);
                 //set pivot to different color to show it is in final position
                 changeColor(i, "finished");
                 finished[i] = 1;
@@ -533,7 +534,8 @@
                 await sleep(sleepTime);
                 //Reset the position IDs
                 if(stopSort) return;
-                await refreshPositionIds(data);
+                refreshPositionIds(data);
+                await sleep(sleepTime*3);
                 //set all finished back to orange;
                 if(stopSort) return;
                 for(var index = 0; index < finished.length; index++){
